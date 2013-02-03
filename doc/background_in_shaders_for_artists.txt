@@ -1,0 +1,110 @@
+A Background in Shaders for Artists
+
+Mike Acton (macton@highmoonstudios.com)
+Matt Lim   (mlim@highmoonstudios.com)
+
+This presentation will share the experiences of a programmer and
+artist who have worked together closely for two years on special
+effects on what is necessary for an artist to successfully build
+great shaders.
+
+The division between programmers and artists is somewhat blurred
+with the heavy use of programable shaders in the current generation
+of consoles. This presentation will help to provide artists with
+the necessary background in math and graphics concepts in order to
+build shaders effectively. 
+
+Although Cg will be used in some examples, this presentation will
+not include a Cg primer, but rather an refresher on the prerequisites 
+to writing Cg shaders.
+
+I. Introduction
+
+1. Some basic math is a prerequisite to understanding shaders
+
+Even if artists are using a visual tool to construct shaders,
+being able to internalize the underlying math will make the
+process much less random.
+
+2. Working together with programmers
+
+Since the introduction of 3D graphics in the video games, the
+low-level details of rendering has been in the hands of the
+programmers. Slowly, artists are being given the opportunity to 
+control the on-screen pixel transformations. But there's a lot
+of old tricks in the heads of the graphics programmers, take
+advantage of that!
+
+[ This is actually a more controversial subject than one might
+imagine. We intend to take some time to drive the point home that
+programmers and artists are un the same team, want the same thing
+and can effectively work as a unit. Programmers don't simply need
+to provide tools for the artists, they must work directly with them
+on the implementation to both provide support and offer suggestions
+as to better implementations. Artists, in turn, should help to
+keep programmers focused on what's visually important, and provide
+feedback and ideas for improving the technology. ]
+
+3. <Something interesting goes here.>
+
+II. Visualizing lighting transformations
+
+This (introductory) section uses lighting as the vehicle to 
+describe basic math concepts for artists. Each section will 
+include a basic example, a background in the necessary math 
+and a discussion of relative costs.
+
+The theme of this section: "It's not magic, people!"
+
+1. Diffuse lighting 
+
+Dot product; vector normalization; PI; the unit circle. 
+
+2. Specular lighting and reflection
+
+The power function; conceptualizing reflection.
+
+3. Light shapes and colors
+
+Shaping the light distance function; how light colors are mixed; 
+projected light textures.
+
+4. Nornal maps
+
+How normal maps change lighting functions; tangent space;
+generating normal maps.
+
+
+III. Procedural methods and examples
+
+This section will cover more complex examples. Concentrating on
+procedural content, trig functions (sin, cos, etc.) will be
+introduced and described in some detail. There will also be an
+introduction to the costs of branching in shaders and some 
+techniques for avoiding them.
+
+1. Generating circles, squares and simple geometric patterns
+
+2. Using curves to generate gradients
+
+3. Using noise (and noise textures) for:
+
+a. Lighting
+b. Making simple textures more natural looking
+c. Marbling and other basic functions
+
+
+III. Putting it all together
+
+Fast procedural volumetric clouds
+
+This example will be about how to use all the tools aboved to 
+generate good volumetric clouds for the typical game engine using
+sprite particles.
+
+Covering topics like:
+1. Faking the lighting when real lighting isn't available for 
+translucent sprites.
+2. Tricks to creating volumetric /anything/ with only screen-facing 
+sprites.
+3. When to give up on "real" and accept "good"
