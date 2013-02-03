@@ -1,0 +1,39 @@
+_half_to_float:
+	rlwinm r10,r3,0,22,31	; h_m, h,
+	rlwinm r8,r3,0,17,21	; h_e, h,
+	addi r4,r8,-1	; is_e_eqz_msb, h_e,
+	mr r5,r3	; h, h
+	cntlzw r2,r10	; tmp133, h_m
+	neg r3,r10	; is_m_nez_msb, h_m
+	and r6,r4,r3	; tmp134, is_e_eqz_msb, is_m_nez_msb
+	subfic r9,r4,31744	; is_e_flagged_msb, is_e_eqz_msb,
+	addi r2,r2,-8	; h_f_m_sa, tmp133,
+	slwi r8,r8,13	;, tmp142, h_e
+	srawi r6,r6,31	;, mask, tmp134
+	slw r0,r10,r2	; h_f_m_sa, tmp153, h_m
+	srawi r11,r9,31	;, mask, is_e_flagged_msb
+	addis r8,r8,0x3800	; tmp144, tmp142,
+	rlwinm r7,r11,0,1,8	; tmp141, mask,
+	rlwinm r0,r0,0,9,31	; tmp154, tmp153,
+	andc r11,r8,r11	;, tmp146, tmp144, mask
+	slwi r10,r10,13	;, tmp156, h_m
+	nor r8,r6,r6	; nmask, mask
+	subfic r2,r2,126	; tmp138, h_f_m_sa,
+	and r0,r0,r6	; tmp155, tmp154, mask
+	and r10,r10,r8	; tmp157, tmp156, nmask
+	or r7,r7,r11	;, tmp147, tmp141, tmp146
+	andc r9,r3,r9	;, tmp151, is_m_nez_msb, is_e_flagged_msb
+	slwi r2,r2,23	;, tmp139, tmp138
+	and r7,r7,r8	; tmp148, tmp147, nmask
+	and r2,r2,r6	; tmp140, tmp139, mask
+	or r0,r0,r10	;, tmp158, tmp155, tmp157
+	srawi r9,r9,31	;, tmp152, tmp151
+	or r2,r2,r7	;, tmp149, tmp140, tmp148
+	and r9,r9,r0	; tmp159, tmp152, tmp158
+	andc r3,r4,r3	;, tmp162, is_e_eqz_msb, is_m_nez_msb
+	or r2,r2,r9	;, tmp160, tmp149, tmp159
+	srawi r3,r3,31	;, tmp163, tmp162
+	andc r3,r2,r3	;, tmp165, tmp160, tmp163
+	rlwinm r5,r5,16,0,0	; tmp137, h,,
+	or r3,r5,r3	;, <result>, tmp137, tmp165
+	blr	;

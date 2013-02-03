@@ -1,0 +1,29 @@
+1c1,2
+<     else if ( expDiff < 0 ) {
+---
+>     else if ( expDiff < 0 )
+>     {
+4c5
+<             return float32_pack( zSign, 0xFF, 0 );
+---
+>             return float32_pack( zSign ^ 1, 0xFF, 0 );
+10c11
+<             aSig |= 0x20000000;
+---
+>             aSig |= 0x40000000;
+12a14,15
+>         bSig |= 0x40000000;
+>         zSig = bSig - aSig;
+13a17
+>         zSign ^= 1;
+15,16d18
+<         aSig |= 0x20000000;
+<         zSig = ( aSig + bSig )<<1;
+18,22c20
+<         if ( (sbits32) zSig < 0 ) {
+<             zSig = aSig + bSig;
+<             ++zExp;
+<         }
+<         return float32_round_and_pack( zSign, zExp, zSig );
+---
+>         return normalizeRoundAndPackFloat32( zSign, zExp, zSig );

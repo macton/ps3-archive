@@ -1,0 +1,332 @@
+#include <stdint.h>
+#include <stdio.h>
+
+typedef uint32_t int32;
+
+/*----------------------------------------------------------------------------
+| Software IEC/IEEE floating-point underflow tininess-detection mode.
+*----------------------------------------------------------------------------*/
+signed char float_detect_tininess;
+enum {
+    float_tininess_after_rounding  = 0,
+    float_tininess_before_rounding = 1
+};
+
+/*----------------------------------------------------------------------------
+| Software IEC/IEEE floating-point rounding mode.
+*----------------------------------------------------------------------------*/
+signed char float_rounding_mode;
+enum {
+    float_round_nearest_even = 0,
+    float_round_down         = 1,
+    float_round_up           = 2,
+    float_round_to_zero      = 3
+};
+
+/*----------------------------------------------------------------------------
+| Software IEC/IEEE floating-point exception flags.
+*----------------------------------------------------------------------------*/
+signed char float_exception_flags;
+enum {
+    float_flag_invalid   =  1,
+    float_flag_divbyzero =  4,
+    float_flag_overflow  =  8,
+    float_flag_underflow = 16,
+    float_flag_inexact   = 32
+};
+
+void float_raise( int32 flags )
+{
+    float_exception_flags |= flags;
+}
+
+/*----------------------------------------------------------------------------
+| Returns the fraction bits of the single-precision floating-point value `a'.
+*----------------------------------------------------------------------------*/
+
+static inline uint32_t extractFloat32Frac( uint32_t a )
+{
+    return a & 0x007FFFFF;
+}
+
+/*----------------------------------------------------------------------------
+| Returns the exponent bits of the single-precision floating-point value `a'.
+*----------------------------------------------------------------------------*/
+
+static inline int32 extractFloat32Exp( uint32_t a )
+{
+    return ( a>>23 ) & 0xFF;
+}
+
+/*----------------------------------------------------------------------------
+| Returns the sign bit of the single-precision floating-point value `a'.
+*----------------------------------------------------------------------------*/
+
+static inline uint32_t extractFloat32Sign( uint32_t a )
+{
+    return a>>31;
+}
+
+int32_t countLeadingZeros32( uint32_t a )
+{
+  if ( a == 0 )
+  {
+    // Can't happen here.
+    return 32;
+  }
+
+  return __builtin_clz( a );
+}
+
+/*----------------------------------------------------------------------------
+| The pattern for a default generated single-precision NaN.
+*----------------------------------------------------------------------------*/
+#define float32_default_nan 0xFFC00000
+
+/*----------------------------------------------------------------------------
+| Returns 1 if the single-precision floating-point value `a' is a NaN;
+| otherwise returns 0.
+*----------------------------------------------------------------------------*/
+
+uint32_t float32_is_nan( uint32_t a )
+{
+    return ( 0xFF000000 < (uint32_t) ( a<<1 ) );
+}
+
+/*----------------------------------------------------------------------------
+| Returns 1 if the single-precision floating-point value `a' is a signaling
+| NaN; otherwise returns 0.
+*----------------------------------------------------------------------------*/
+
+uint32_t float32_is_signaling_nan( uint32_t a )
+{
+    return ( ( ( a>>22 ) & 0x1FF ) == 0x1FE ) && ( a & 0x003FFFFF );
+}
+
+/*----------------------------------------------------------------------------
+| Takes two single-precision floating-point values `a' and `b', one of which
+| is a NaN, and returns the appropriate NaN result.  If either `a' or `b' is a
+| signaling NaN, the invalid exception is raised.
+*----------------------------------------------------------------------------*/
+
+static uint32_t propagateFloat32NaN( uint32_t a, uint32_t b )
+{
+    uint32_t aIsNaN, aIsSignalingNaN, bIsNaN, bIsSignalingNaN;
+
+    aIsNaN = float32_is_nan( a );
+    aIsSignalingNaN = float32_is_signaling_nan( a );
+    bIsNaN = float32_is_nan( b );
+    bIsSignalingNaN = float32_is_signaling_nan( b );
+    a |= 0x00400000;
+    b |= 0x00400000;
+    if ( aIsSignalingNaN | bIsSignalingNaN ) float_raise( float_flag_invalid );
+    if ( aIsSignalingNaN ) {
+        if ( bIsSignalingNaN ) goto returnLargerSignificand;
+        return bIsNaN ? b : a;
+    }
+    else if ( aIsNaN ) {
+        if ( bIsSignalingNaN | ! bIsNaN ) return a;
+ returnLargerSignificand:
+        if ( (uint32_t) ( a<<1 ) < (uint32_t) ( b<<1 ) ) return b;
+        if ( (uint32_t) ( b<<1 ) < (uint32_t) ( a<<1 ) ) return a;
+        return ( a < b ) ? a : b;
+    }
+    else {
+        return b;
+    }
+
+}
+
+/*----------------------------------------------------------------------------
+| Shifts `a' right by the number of bits given in `count'.  If any nonzero
+| bits are shifted off, they are ``jammed'' into the least significant bit of
+| the result by setting the least significant bit to 1.  The value of `count'
+| can be arbitrarily large; in particular, if `count' is greater than 32, the
+| result will be either 0 or 1, depending on whether `a' is zero or nonzero.
+| The result is stored in the location pointed to by `zPtr'.
+*----------------------------------------------------------------------------*/
+
+static inline void shift32RightJamming( uint32_t a, int32 count, uint32_t *zPtr )
+{
+    uint32_t z;
+
+    if ( count == 0 ) {
+        z = a;
+    }
+    else if ( count < 32 ) {
+        z = ( a>>count ) | ( ( a<<( ( - count ) & 31 ) ) != 0 );
+    }
+    else {
+        z = ( a != 0 );
+    }
+    *zPtr = z;
+}
+
+/*----------------------------------------------------------------------------
+| Normalizes the subnormal single-precision floating-point value represented
+| by the denormalized significand `aSig'.  The normalized exponent and
+| significand are stored at the locations pointed to by `zExpPtr' and
+| `zSigPtr', respectively.
+*----------------------------------------------------------------------------*/
+
+static void
+ normalizeFloat32Subnormal( uint32_t aSig, int32 *zExpPtr, uint32_t *zSigPtr )
+{
+    int32 shiftCount;
+
+    shiftCount = countLeadingZeros32( aSig ) - 8;
+    *zSigPtr = aSig<<shiftCount;
+    *zExpPtr = 1 - shiftCount;
+}
+
+/*----------------------------------------------------------------------------
+| Packs the sign `zSign', exponent `zExp', and significand `zSig' into a
+| single-precision floating-point value, returning the result.  After being
+| shifted into the proper positions, the three fields are simply added
+| together to form the result.  This means that any integer portion of `zSig'
+| will be added into the exponent.  Since a properly normalized significand
+| will have an integer portion equal to 1, the `zExp' input should be 1 less
+| than the desired result exponent whenever `zSig' is a complete, normalized
+| significand.
+*----------------------------------------------------------------------------*/
+
+static inline uint32_t packFloat32( uint32_t zSign, int32 zExp, uint32_t zSig )
+{
+    return ( ( (uint32_t) zSign )<<31 ) + ( ( (uint32_t) zExp )<<23 ) + zSig;
+}
+
+/*----------------------------------------------------------------------------
+| Takes an abstract floating-point value having sign `zSign', exponent `zExp',
+| and significand `zSig', and returns the proper single-precision floating-
+| point value corresponding to the abstract input.  Ordinarily, the abstract
+| value is simply rounded and packed into the single-precision format, with
+| the inexact exception raised if the abstract input cannot be represented
+| exactly.  However, if the abstract value is too large, the overflow and
+| inexact exceptions are raised and an infinity or maximal finite value is
+| returned.  If the abstract value is too small, the input value is rounded to
+| a subnormal number, and the underflow and inexact exceptions are raised if
+| the abstract input cannot be represented exactly as a subnormal single-
+| precision floating-point number.
+|     The input significand `zSig' has its binary point between bits 30
+| and 29, which is 7 bits to the left of the usual location.  This shifted
+| significand must be normalized or smaller.  If `zSig' is not normalized,
+| `zExp' must be 0; in that case, the result returned is a subnormal number,
+| and it must not require rounding.  In the usual case that `zSig' is
+| normalized, `zExp' must be 1 less than the ``true'' floating-point exponent.
+| The handling of underflow and overflow follows the IEC/IEEE Standard for
+| Binary Floating-Point Arithmetic.
+*----------------------------------------------------------------------------*/
+
+static uint32_t roundAndPackFloat32( uint32_t zSign, int32 zExp, uint32_t zSig )
+{
+    int32 roundingMode;
+    uint32_t roundNearestEven;
+    int32 roundIncrement, roundBits;
+    uint32_t isTiny;
+
+    roundingMode = float_rounding_mode;
+    roundNearestEven = ( roundingMode == float_round_nearest_even );
+    roundIncrement = 0x40;
+    if ( ! roundNearestEven ) {
+        if ( roundingMode == float_round_to_zero ) {
+            roundIncrement = 0;
+        }
+        else {
+            roundIncrement = 0x7F;
+            if ( zSign ) {
+                if ( roundingMode == float_round_up ) roundIncrement = 0;
+            }
+            else {
+                if ( roundingMode == float_round_down ) roundIncrement = 0;
+            }
+        }
+    }
+    roundBits = zSig & 0x7F;
+    if ( 0xFD <= (uint32_t) zExp ) {
+        if (    ( 0xFD < zExp )
+             || (    ( zExp == 0xFD )
+                  && ( (int32_t) ( zSig + roundIncrement ) < 0 ) )
+           ) {
+            float_raise( float_flag_overflow | float_flag_inexact );
+            return packFloat32( zSign, 0xFF, 0 ) - ( roundIncrement == 0 );
+        }
+        if ( zExp < 0 ) {
+            isTiny =
+                   ( float_detect_tininess == float_tininess_before_rounding )
+                || ( zExp < -1 )
+                || ( zSig + roundIncrement < 0x80000000 );
+            shift32RightJamming( zSig, - zExp, &zSig );
+            zExp = 0;
+            roundBits = zSig & 0x7F;
+            if ( isTiny && roundBits ) float_raise( float_flag_underflow );
+        }
+    }
+    if ( roundBits ) float_exception_flags |= float_flag_inexact;
+    zSig = ( zSig + roundIncrement )>>7;
+    zSig &= ~ ( ( ( roundBits ^ 0x40 ) == 0 ) & roundNearestEven );
+    if ( zSig == 0 ) zExp = 0;
+    return packFloat32( zSign, zExp, zSig );
+
+}
+
+/*----------------------------------------------------------------------------
+| Returns the result of dividing the single-precision floating-point value `a'
+| by the corresponding value `b'.  The operation is performed according to the
+| IEC/IEEE Standard for Binary Floating-Point Arithmetic.
+*----------------------------------------------------------------------------*/
+
+uint32_t float32_div( uint32_t a, uint32_t b )
+{
+    uint32_t aSign, bSign, zSign;
+    int32  aExp, bExp, zExp;
+    uint32_t aSig, bSig, zSig;
+
+    aSig  = extractFloat32Frac( a );
+    aExp  = extractFloat32Exp( a );
+    aSign = extractFloat32Sign( a );
+    bSig  = extractFloat32Frac( b );
+    bExp  = extractFloat32Exp( b );
+    bSign = extractFloat32Sign( b );
+    zSign = aSign ^ bSign;
+
+    if ( aExp == 0xFF ) {
+        if ( aSig ) return propagateFloat32NaN( a, b );
+        if ( bExp == 0xFF ) {
+            if ( bSig ) return propagateFloat32NaN( a, b );
+            float_raise( float_flag_invalid );
+            return float32_default_nan;
+        }
+        return packFloat32( zSign, 0xFF, 0 );
+    }
+    if ( bExp == 0xFF ) {
+        if ( bSig ) return propagateFloat32NaN( a, b );
+        return packFloat32( zSign, 0, 0 );
+    }
+    if ( bExp == 0 ) {
+        if ( bSig == 0 ) {
+            if ( ( aExp | aSig ) == 0 ) {
+                float_raise( float_flag_invalid );
+                return float32_default_nan;
+            }
+            float_raise( float_flag_divbyzero );
+            return packFloat32( zSign, 0xFF, 0 );
+        }
+        normalizeFloat32Subnormal( bSig, &bExp, &bSig );
+    }
+    if ( aExp == 0 ) {
+        if ( aSig == 0 ) return packFloat32( zSign, 0, 0 );
+        normalizeFloat32Subnormal( aSig, &aExp, &aSig );
+    }
+    zExp = aExp - bExp + 0x7D;
+    aSig = ( aSig | 0x00800000 )<<7;
+    bSig = ( bSig | 0x00800000 )<<8;
+    if ( bSig <= ( aSig + aSig ) ) {
+        aSig >>= 1;
+        ++zExp;
+    }
+    zSig = ( ( (uint64_t) aSig )<<32 ) / bSig;
+    if ( ( zSig & 0x3F ) == 0 ) {
+        zSig |= ( (uint64_t) bSig * zSig != ( (uint64_t) aSig )<<32 );
+    }
+    return roundAndPackFloat32( zSign, zExp, zSig );
+}

@@ -1,0 +1,57 @@
+obase=16
+ibase=2
+f16 = 0011110000000000
+f32 = 00111111100000000000000000000000
+print "    test.f32 = 1.000000f;\n"
+print "    CHECK_EQUAL( test.u32, 0x", f32, " )\n"
+print "    test.f16 = convert_half( 0x", f32, " )\n"
+print "    CHECK_EQUAL( test_f16, 0x", f16, " )\n"
+f16 = 0011110000000001
+f32 = 00111111100000000010000000000000
+print "    test.f32 = 1.000977f;\n"
+print "    CHECK_EQUAL( test.u32, 0x", f32, " )\n"
+print "    test.f16 = convert_half( 0x", f32, " )\n"
+print "    CHECK_EQUAL( test_f16, 0x", f16, " )\n"
+f16 = 0011110000000001
+f32 = 00111111100000000010000000000000
+print "    test.f32 = 1.000488f;\n"
+print "    CHECK_EQUAL( test.u32, 0x", f32, " )\n"
+print "    test.f16 = convert_half( 0x", f32, " )\n"
+print "    CHECK_EQUAL( test_f16, 0x", f16, " )\n"
+f16 = 0011110000000000
+f32 = 00111111100000000000000000000000
+print "    test.f32 = 1.000488f;\n"
+print "    CHECK_EQUAL( test.u32, 0x", f32, " )\n"
+print "    test.f16 = convert_half( 0x", f32, " )\n"
+print "    CHECK_EQUAL( test_f16, 0x", f16, " )\n"
+f16 = 0011110000000001
+f32 = 00111111100000000010000000000000
+print "    test.f32 = 1.000488f;\n"
+print "    CHECK_EQUAL( test.u32, 0x", f32, " )\n"
+print "    test.f16 = convert_half( 0x", f32, " )\n"
+print "    CHECK_EQUAL( test_f16, 0x", f16, " )\n"
+f16 = 0011101111111111
+f32 = 00111111011111111110000000000000
+print "    test.f32 = 0.999512f;\n"
+print "    CHECK_EQUAL( test.u32, 0x", f32, " )\n"
+print "    test.f16 = convert_half( 0x", f32, " )\n"
+print "    CHECK_EQUAL( test_f16, 0x", f16, " )\n"
+f16 = 0011110000000000
+f32 = 00111111100000000000000000000000
+print "    test.f32 = 0.999756f;\n"
+print "    CHECK_EQUAL( test.u32, 0x", f32, " )\n"
+print "    test.f16 = convert_half( 0x", f32, " )\n"
+print "    CHECK_EQUAL( test_f16, 0x", f16, " )\n"
+f16 = 0011110000000000
+f32 = 00111111100000000000000000000000
+print "    test.f32 = 0.999756f;\n"
+print "    CHECK_EQUAL( test.u32, 0x", f32, " )\n"
+print "    test.f16 = convert_half( 0x", f32, " )\n"
+print "    CHECK_EQUAL( test_f16, 0x", f16, " )\n"
+f16 = 0011101111111111
+f32 = 00111111011111111110000000000000
+print "    test.f32 = 0.999756f;\n"
+print "    CHECK_EQUAL( test.u32, 0x", f32, " )\n"
+print "    test.f16 = convert_half( 0x", f32, " )\n"
+print "    CHECK_EQUAL( test_f16, 0x", f16, " )\n"
+quit

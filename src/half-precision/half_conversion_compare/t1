@@ -1,0 +1,6 @@
+  return (uint32_t)( (int32_t)( a - b ) >> 31 );
+}
+
+static inline uint32_t uint32_gte( uint32_t a, uint32_t b )
+{
+  return ~uint32_lt( a, b );

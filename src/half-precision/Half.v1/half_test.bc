@@ -1,0 +1,346 @@
+obase=16
+ibase=2
+print "#include <stdio.h>\n"
+print "#include <stdint.h>\n"
+print "typedef union FLOAT_32 FLOAT_32;\n"
+print "union FLOAT_32\n"
+print "{\n"
+print "    float    f32;\n"
+print "    uint32_t u32;\n"
+print "};\n"
+print "uint16_t half_convert( uint32_t );\n"
+print "\n"
+print "#define CHECK_HALF(arg0,arg1,arg2) if (arg0 != arg1) { FLOAT_32 f; f.u32 = arg2; test_count++; printf(\q[%s:%d] FAILED: 0x%04x != 0x%04x (%f)\\n\q,__FILE__,__LINE__,arg0,arg1,f.f32); } else { test_count++; test_pass_count++; }\n"
+print "\n"
+print "int main( void )\n"
+print "{\n"
+print "    FLOAT_32 test;\n"
+print "    uint16_t test_f16;\n"
+print "    int      test_count = 0;\n"
+print "    int      test_pass_count = 0;\n"
+print "\n"
+f16 = 1000000000000000
+f32 = 10000000000000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0000000000000000
+f32 = 00000000000000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0011110000000000
+f32 = 00111111100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0011110000000001
+f32 = 00111111100000000010000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0011110000000001
+f32 = 00111111100000000010000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0011110000000000
+f32 = 00111111100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0011110000000001
+f32 = 00111111100000000010000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0011101111111111
+f32 = 00111111011111111110000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0011110000000000
+f32 = 00111111100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0011110000000000
+f32 = 00111111100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0011101111111111
+f32 = 00111111011111111110000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0000000000000001
+f32 = 00110011100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0000000000000010
+f32 = 00110100000000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0000000000000010
+f32 = 00110100000000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0000000000000001
+f32 = 00110011100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0000000000000010
+f32 = 00110100000000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0000000000000000
+f32 = 00000000000000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0000000000000001
+f32 = 00110011100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0000000000000001
+f32 = 00110011100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0000000000000000
+f32 = 00000000000000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0000010000000000
+f32 = 00111000100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0000010000000001
+f32 = 00111000100000000010000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0000010000000001
+f32 = 00111000100000000010000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0000010000000000
+f32 = 00111000100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0000010000000001
+f32 = 00111000100000000010000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0000001111111111
+f32 = 00111000011111111100000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0000010000000000
+f32 = 00111000100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0000010000000000
+f32 = 00111000100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0000001111111111
+f32 = 00111000011111111100000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0100000000000000
+f32 = 01000000000000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0100001000000000
+f32 = 01000000010000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0100100100000000
+f32 = 01000001001000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0010111001100110
+f32 = 00111101110011001100000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0011001001100110
+f32 = 00111110010011001100000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0011010011001101
+f32 = 00111110100110011010000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0111101111111111
+f32 = 01000111011111111110000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0111110000000000
+f32 = 01111111100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0111110000000000
+f32 = 01111111100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0111101111111111
+f32 = 01000111011111111110000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0111110000000000
+f32 = 01111111100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0111110000000000
+f32 = 01111111100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0111110000000000
+f32 = 01111111100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1011110000000000
+f32 = 10111111100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1011110000000001
+f32 = 10111111100000000010000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1011110000000001
+f32 = 10111111100000000010000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1011110000000000
+f32 = 10111111100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1011110000000001
+f32 = 10111111100000000010000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1011101111111111
+f32 = 10111111011111111110000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1011110000000000
+f32 = 10111111100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1011110000000000
+f32 = 10111111100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1011101111111111
+f32 = 10111111011111111110000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1000000000000001
+f32 = 10110011100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1000000000000010
+f32 = 10110100000000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1000000000000010
+f32 = 10110100000000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1000000000000001
+f32 = 10110011100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1000000000000010
+f32 = 10110100000000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0000000000000000
+f32 = 00000000000000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1000000000000001
+f32 = 10110011100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1000000000000001
+f32 = 10110011100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 0000000000000000
+f32 = 00000000000000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1000010000000000
+f32 = 10111000100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1000010000000001
+f32 = 10111000100000000010000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1000010000000001
+f32 = 10111000100000000010000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1000010000000000
+f32 = 10111000100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1000010000000001
+f32 = 10111000100000000010000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1000001111111111
+f32 = 10111000011111111100000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1000010000000000
+f32 = 10111000100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1000010000000000
+f32 = 10111000100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1000001111111111
+f32 = 10111000011111111100000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1100000000000000
+f32 = 11000000000000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1100001000000000
+f32 = 11000000010000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1100100100000000
+f32 = 11000001001000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1010111001100110
+f32 = 10111101110011001100000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1011001001100110
+f32 = 10111110010011001100000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1011010011001101
+f32 = 10111110100110011010000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1111101111111111
+f32 = 11000111011111111110000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1111110000000000
+f32 = 11111111100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1111110000000000
+f32 = 11111111100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1111101111111111
+f32 = 11000111011111111110000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+f16 = 1111110000000000
+f32 = 11111111100000000000000000000000
+print "    test_f16 = half_convert( 0x", f32, " );\n"
+print "    CHECK_HALF( test_f16, 0x", f16, ", 0x", f32, " )\n"
+print "\n"
+print "    printf(\q[%s] Passed %d of %d\\n\q, __FILE__, test_pass_count, test_count);\n"
+print "    return (0);\n"
+print "}\n"
+quit

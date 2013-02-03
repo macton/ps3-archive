@@ -1,0 +1,351 @@
+#include <stdio.h>
+#include <stdint.h>
+
+uint16_t
+half_convert_alt( uint32_t f32 )
+{
+    //
+    // Our floating point number, f, is represented by the bit
+    // pattern in integer i.  Disassemble that bit pattern into
+    // the sign, s, the exponent, e, and the significand, m.
+    // Shift s into the position where it will go in in the
+    // resulting half number.
+    // Adjust e, accounting for the different exponent bias
+    // of float and half (127 versus 15).
+    //
+
+    register int s =  (f32 >> 16) & 0x00008000;
+    register int e = ((f32 >> 23) & 0x000000ff) - (127 - 15);
+    register int m =   f32        & 0x007fffff;
+
+    //
+    // Now reassemble s, e and m into a half:
+    //
+
+    if (e <= 0)
+    {
+        if (e < -10)
+        {
+            //
+            // E is less than -10.  The absolute value of f is
+            // less than HALF_MIN (f may be a small normalized
+            // float, a denormalized float or a zero).
+            //
+            // We convert f to a half zero.
+            //
+    
+            return 0;
+        }
+    
+        //
+        // E is between -10 and 0.  F is a normalized float,
+        // whose magnitude is less than HALF_NRM_MIN.
+        //
+        // We convert f to a denormalized half.
+        // 
+    
+        m = (m | 0x00800000) >> (1 - e);
+    
+        //
+        // Round to nearest, round "0.5" up.
+        //
+        // Rounding may cause the significand to overflow and make
+        // our number normalized.  Because of the way a half's bits
+        // are laid out, we don't have to treat this case separately;
+        // the code below will handle it correctly.
+        // 
+    
+        if (m &  0x00001000)
+            m += 0x00002000;
+    
+        //
+        // Assemble the half from s, e (zero) and m.
+        //
+
+        return s | (m >> 13);
+    }
+    else if (e == 0xff - (127 - 15))
+    {
+    if (m == 0)
+    {
+        //
+        // F is an infinity; convert f to a half
+        // infinity with the same sign as f.
+        //
+
+        return s | 0x7c00;
+    }
+    else
+    {
+        //
+        // F is a NAN; we produce a half NAN that preserves
+        // the sign bit and the 10 leftmost bits of the
+        // significand of f, with one exception: If the 10
+        // leftmost bits are all zero, the NAN would turn 
+        // into an infinity, so we have to set at least one
+        // bit in the significand.
+        //
+
+        m >>= 13;
+        return s | 0x7c00 | m | (m == 0);
+    }
+    }
+    else
+    {
+    //
+    // E is greater than zero.  F is a normalized float.
+    // We try to convert f to a normalized half.
+    //
+
+    //
+    // Round to nearest, round "0.5" up
+    //
+
+    if (m &  0x00001000)
+    {
+        m += 0x00002000;
+
+        if (m & 0x00800000)
+        {
+        m =  0;        // overflow in significand,
+        e += 1;        // adjust exponent
+        }
+    }
+
+    //
+    // Handle exponent overflow
+    //
+
+    if (e > 30)
+    {
+        // overflow ();    // Cause a hardware floating point overflow;
+        return s | 0x7c00;    // if this returns, the half becomes an
+    }               // infinity with the same sign as f.
+
+    //
+    // Assemble the half from s, e and m.
+    //
+
+    return s | (e << 10) | (m >> 13);
+    }
+}
+
+static inline uint64_t int64_lt( int64_t arg0, int16_t arg1 )
+{
+    return (uint64_t)((arg0-arg1) >> 63);
+}
+
+static inline int64_t int64_sel( uint64_t mask, uint64_t on_val, uint64_t off_val )
+{
+    return (( mask & on_val ) | ( (~mask) & off_val ));
+}
+
+uint16_t
+half_convert( uint32_t f32 )
+{
+    // See:
+    //     OpenGL Extension Specification
+    //     APPLE_float_pixels 
+    //     Additions to Chapter 2 of the OpenGL 1.2 Specification (OpenGL Operation)
+    //     http://developer.apple.com/graphicsimaging/opengl/extensions/apple_float_pixels.html
+    //
+    //     Add a new Section 2.1.2, (p. 6):
+    //     2.1.2  16 Bit Floating-Point
+    //         A 16 bit floating-point number (half float) has 1 bit sign (s), 10 bit
+    //         mantissa (m), and 5 bit exponent (e) with -15 bias.  Given s, m, and e the
+    //         following applies:
+    //
+    //         if (0 < e < 31)
+    //             (-1)^s * 2^(e - 15) * (1 + m / 2^10)
+    //         else if (m == 0)
+    //             (-1)^s * 0
+    //         else if (m != 0)
+    //             (-1)^s * 2^(-14) * (m / 2^10)
+    //
+    //      Depending on hardware support the follow definitions of INF (Infinity) and
+    //      NaN (Not a Number) conditions may also apply but are not required by this
+    //      specification:
+    //
+    //          if (e == 31 and m == 0)
+    //              (-1)^s * INF
+    //          if (e == 31 and m != 0)
+    //              NaN
+    //
+    //      INF is a special representation indicating numerical overflow, while NaN
+    //      is a special representation indicating the result of illegal arithmetic
+    //      operations, such as division by zero.  Computation with half floats is
+    //      carried out with the same termination and interruption limitations as with
+    //      single or double precision numbers.
+      
+
+    // Separate 32 bit floating point into component values Adjust bias for 16 bit float 
+    // value (from 127 to 15)
+    const uint64_t f16_s                    = (f32 >> 16) & 0x00008000;
+    const uint64_t f16_e_b127               = (f32 >> 23) & 0x000000ff;
+    const uint64_t f16_m                    = (f32      ) & 0x007fffff;
+    const uint64_t f16_e                    = f16_e_b127 - (127 - 15);
+
+#if 0
+    // CHOOSE f16_denorm_value WHEN (-10 <= e <= 0)
+    //     float 16 mantissa = 2^(1-e)
+    //
+    //     On PPU shift by register value is microcoded - I'm going
+    //     to avoid using it here (although it will be slightly slower in
+    //     this case) just to give an example of how it can be avoided.
+    //
+    //     Because we know e can only be 11 values, the shift amount can
+    //     only be 11 values. We can unroll the a shift loop by cutting
+    //     the shift amount in roughly half and all the cases can be 
+    //     covered in 5 unrolls.
+    const uint64_t m_denorm_0               = (f16_m | 0x00800000);
+    const uint64_t m_shift_0                = f16_e;
+
+    // -10 <= e < -5 (Shift right 7)
+    const uint64_t m_sl5_mask               = int64_lt( m_shift_0, -5 );
+    const uint64_t m_denorm_sl5             = m_denorm_0 >> 7;
+    const uint64_t m_denorm_1               = int64_sel( m_sl5_mask, m_denorm_s5, m_denorm_0 );
+    const uint64_t m_shift_1                = int64_sel( m_sl5_mask, m_shift_0-5, m_shift_0  );
+
+    // -5 <= e < -2 (Shift right 4)
+    const uint64_t m_sl3_mask               = int64_lt( m_shift_1, -2 );
+    const uint64_t m_denorm_sl3             = m_denorm_1 >> 4;
+    const uint64_t m_denorm_2               = int64_sel( m_sl3_mask, m_denorm_s3, m_denorm_1 );
+    const uint64_t m_shift_2                = int64_sel( m_sl3_mask, m_shift_1-3, m_shift_1  );
+
+    // -2 <= e <= 0 (Shift right 1)
+    const uint64_t m_sl3_mask               = int64_lt( m_shift_1, 1 );
+    const uint64_t m_denorm_sl3             = m_denorm_1 << 3;
+    const uint64_t m_denorm_2               = int64_sel( m_sl3_mask, m_denorm_s3, m_denorm_1 );
+    const uint64_t m_shift_2                = int64_sel( m_sl3_mask, m_shift_1-3, m_shift_1  );
+
+    // -2 <= e <= 0 (Shift right 1)
+    const uint64_t m_sl3_mask               = int64_lt( m_shift_1, 1 );
+    const uint64_t m_denorm_sl3             = m_denorm_1 << 3;
+    const uint64_t m_denorm_2               = int64_sel( m_sl3_mask, m_denorm_s3, m_denorm_1 );
+    const uint64_t m_shift_2                = int64_sel( m_sl3_mask, m_shift_1-3, m_shift_1  );
+
+    // -2 <= e <= 0 (Shift right 1)
+    const uint64_t m_sl3_mask               = int64_lt( m_shift_1, 1 );
+    const uint64_t m_denorm_sl3             = m_denorm_1 << 3;
+    const uint64_t m_denorm_2               = int64_sel( m_sl3_mask, m_denorm_s3, m_denorm_1 );
+    const uint64_t m_shift_2                = int64_sel( m_sl3_mask, m_shift_1-3, m_shift_1  );
+
+    // m_denorm = 2^(1-e)
+    const uint64_t m_denorm                 = m_denorm_2;
+    
+    // Round float 16 mantissa
+    const uint64_t m_denorm_round_offset    = (m_denorm & 0x00001000) << 1;
+    const uint64_t m_denorm_rounded         = m_denorm + m_denorm_round_offset;
+
+    // Result: f16_denorm_value 
+    const uint64_t f16_denorm_value         = f16_s | (m_denorm_rounded >> 13);
+#endif
+
+#if 0
+    // WHEN (e == bias)
+    const uint64_t e_nflag                  = ( e - ( 0xff - (127-15) ) );
+    const uint64_t e_nflag_mask             = (uint64_t)( (int64_t)( e | -e )  >> 63 );
+    const uint64_t e_flag_mask              = ~e_nflag_mask;
+#endif
+
+#if 0
+    // CHOOSE f16_inf_value WHEN (e == bias) and (mantissa == 0)
+    //     float 16 is infinity
+    const uint64_t f16_ninf_mask            = (uint64_t)( (int64_t)( m | -m ) >> 63 );
+    const uint64_t f16_inf_mask             = (~f16_ninf_mask) & e_flag_mask;
+    const uint64_t f16_inf_value            = s | 0x7c00;
+#endif
+
+#if 0
+    // CHOOSE f16_nan_value WHEN (e == bias) and (mantissa != 0)
+    //     float 16 is NAN
+    //     Preserve the sign and MSB of the float 32
+    const uint64_t f16_nan_m                = m >> 13;
+    const uint64_t f16_nan_value            = s | 0x7c00 | ( m >>= 13 );
+#endif
+
+#if 0
+    // WHEN (e == bias) and (mantissa != 0) and (10 MSB mantissa == 0)
+    //     float 16 is still NAN, but we need to set the LSB so that it
+    //     doesn't become infinity.
+    const uint64_t f16_nan_ninf_mas k       = (uint64_t)( (int64_t)( f16_nan_m | -f16_nan_m ) >> 63 );
+    const uint64_t f16_nan_inf_mask         = ~f16_nan_ninf_mask;
+    const uint64_t f16_nan_result           = int64_sel( f16_nan_inf_mask, f16_nan_value | 0x01, f16_nan_value );
+#endif
+
+    // WHEN (e > 30)
+    //     The 32 bit float cannot be represented. Overflow.
+    const uint64_t f16_overflow_mask        = int64_lt( 30, f16_e );
+
+    // WHEN (0 < e <= 30)
+    //     The 32 bit float can be represented as a normalized 16 bit float
+    const uint64_t f16_normal_mask          = int64_lt( 0, f16_e ) & (~f16_overflow_mask);
+    const uint64_t m_norm                   = f16_m;
+    const uint64_t m_norm_round_offset      = (m_norm & 0x00001000) << 1;
+    const uint64_t m_norm_rounded           = m_norm + m_norm_round_offset;
+    const uint64_t f16_norm_value           = f16_s | (f16_e << 10) | (m_norm_rounded >> 13);
+
+    // WHEN (e == 0) AND (m == 0) 
+    //     The 16 bit float is zero.
+    const uint64_t f16_zero_value           = f16_s;
+
+#if 0
+    // WHEN (m & 0x00800000) 
+    //     Tbe mantissa value will overflow the 16 bit float.
+    //     Just increment the exponent,
+    const uint64_t m_norm_overflow_flag     = f16_m & 0x00800000;
+    const uint64_t m_norm_overflow_mask     = (uint64_t)(((int64_t)(m_norm_overflow_flag << 8)) >> 63);
+    const uint64_t m_norm_e                 = int64_sel( m_norm_overflow_mask, f16_e+1, f16_e );
+    const uint64_t m_norm_m                 = int64_sel( m_norm_overflow_mask, 0, m_norm_rounded );
+    const uint64_t f16_norm_value           = f16_s | (m_norm_e << 10) | (m_norm_m >> 13);
+#endif
+
+#if 0
+#endif
+
+#if 0
+    // WHEN (e < -10)
+    //     The 32 bit float can only be reasonably represented as a zero 16 bit float.
+    const uint64_t f16_denorm_zero_mask     = int64_lt( e, -10 );
+
+    // WHEN (-10 <= e <= 0)
+    //     The 32 bit float can be represented as a denormalized 16 bit float.
+    const uint64_t f16_denorm_mask          = int64_lt( e, 1 ) & ~( f16_denorm_zero_mask );
+
+    // CHOOSE (INF OR NAN)
+    const uint16_t f16_flag_result          = int64_sel( f16_inf_mask, f16_inf_value, f16_nan_value );
+
+    // CHOOSE (e < -10) OR (-10 <= e <= 0)
+    const uint64_t f16_denorm_result        = int64_sel( f16_denorm_mask, 0, f16_denorm_value );
+
+    // CHOOSE (norm OR inf )
+    const uint64_t f16_norm_result          = int64_sel( f16_normal_mask, f16_norm_value, f16_s | 0x7c00 );
+#endif
+
+    //
+    // CHOOSE norm OR zero
+    //
+    const uint64_t f16_result = ( f16_norm_value & f16_normal_mask ) | ( f16_zero_value & (~f16_normal_mask) );
+
+    return (uint16_t)(f16_result);
+}
+
+typedef union FLOAT_32 FLOAT_32;
+union FLOAT_32
+{
+    float    f32;
+    uint32_t u32;
+};
+
+int
+main( void )
+{
+    FLOAT_32 x;
+    uint16_t x_f16;
+
+    x.f32 = 1.0f;
+    x_f16 = half_convert( x.u32 );
+    printf( "%f = %08x -> %04x\n", x.f32, x.u32, x_f16 );
+
+    return (0);
+}

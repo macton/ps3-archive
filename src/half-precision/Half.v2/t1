@@ -1,0 +1,5 @@
+half.c: In function ‘half_to_float’:
+half.c:90: warning: unused variable ‘h_m_grs_carry_pos’
+half.c:89: warning: unused variable ‘h_m_grs_carry’
+half.c:84: warning: unused variable ‘h_m_hidden’
+half.c:83: warning: unused variable ‘h_m_msb_mask’

@@ -1,0 +1,106 @@
+Small Integer Tests...
+    FAILED: -0 != 0
+Testing small primes for: (P-1)*(Q-1) == (P*Q)+1-(P+Q) ...  PASSED (340368)
+Testing small primes for: (P-1) == ((P*Q)+1-(P+Q))/(Q-1) ...  PASSED (340368)
+Testing small primes for: (Q-1) == ((P*Q)+1-(P+Q))/(P-1) ...  PASSED (340368)
+Testing small primes for: (P+1)*(Q+1) == (P*Q)+1+(P+Q) ...  PASSED (340368)
+Testing small primes for: (Q+1) == ((P*Q)+1+(P+Q))/(P+1) ...  PASSED (340368)
+Testing small primes for: (P+1) == ((P*Q)+1+(P+Q))/(Q+1) ...  PASSED (340368)
+Testing radix and precision... PASSED.
+Testing for extra-precise subexpressions... PASSED.
+Test normalized subtraction... PASSED.
+Test float32 divide (small numbers)... [+,+]...  PASSED.
+Test float32 divide (small numbers)... [-,+]...  PASSED.
+Test float32 divide (small numbers)... [+,-]...  PASSED.
+Test float32 divide (small numbers)... [-,-]...  PASSED.
+Test float32 divide (small numbers)... [+,+]...  PASSED.
+Test float32 divide (medium numbers).. [+,+]...  PASSED.
+Test float32 divide (medium numbers).. [-,+]...  PASSED.
+Test float32 divide (medium numbers).. [+,-]...  PASSED.
+Test float32 divide (medium numbers).. [-,-]...  PASSED.
+Test float32 divide (medium numbers).. [+,+]...  PASSED.
+Test float32 divide (big numbers)..... [+,+]...  PASSED.
+Test float32 divide (big numbers)..... [-,+]...  PASSED.
+Test float32 divide (big numbers)..... [+,-]...  PASSED.
+Test float32 divide (big numbers)..... [-,-]...  PASSED.
+Test float32 divide (big numbers)..... [+,+]...  PASSED.
+Test float32 divide (special numbers). [+,+]...  PASSED.
+Test float32 divide (special numbers). [-,+]...  PASSED.
+Test float32 divide (special numbers). [+,-]...  PASSED.
+Test float32 divide (special numbers). [-,-]...  PASSED.
+Test float32 divide (special numbers). [+,+]...  PASSED.
+Test float32 divide (denorm numbers)... [+,+]...  PASSED.
+Test float32 divide (denorm numbers)... [-,+]...  PASSED.
+Test float32 divide (denorm numbers)... [+,-]...  PASSED.
+Test float32 divide (denorm numbers)... [-,-]...  PASSED.
+Test float32 divide (denorm numbers)... [+,+]...  PASSED.
+Test float32 multiply (small numbers)... [+,+]...  PASSED.
+Test float32 multiply (small numbers)... [-,+]...  PASSED.
+Test float32 multiply (small numbers)... [+,-]...  PASSED.
+Test float32 multiply (small numbers)... [-,-]...  PASSED.
+Test float32 multiply (small numbers)... [+,+]...  PASSED.
+Test float32 multiply (medium numbers).. [+,+]...  PASSED.
+Test float32 multiply (medium numbers).. [-,+]...  PASSED.
+Test float32 multiply (medium numbers).. [+,-]...  PASSED.
+Test float32 multiply (medium numbers).. [-,-]...  PASSED.
+Test float32 multiply (medium numbers).. [+,+]...  PASSED.
+Test float32 multiply (big numbers)..... [+,+]...  PASSED.
+Test float32 multiply (big numbers)..... [-,+]...  PASSED.
+Test float32 multiply (big numbers)..... [+,-]...  PASSED.
+Test float32 multiply (big numbers)..... [-,-]...  PASSED.
+Test float32 multiply (big numbers)..... [+,+]...  PASSED.
+Test float32 multiply (denorm numbers)... [+,+]...  PASSED.
+Test float32 multiply (denorm numbers)... [-,+]...  PASSED.
+Test float32 multiply (denorm numbers)... [+,-]...  PASSED.
+Test float32 multiply (denorm numbers)... [-,-]...  PASSED.
+Test float32 multiply (denorm numbers)... [+,+]...  PASSED.
+Test float32 multiply (special numbers). [+,+]...  PASSED.
+Test float32 multiply (special numbers). [-,+]...  PASSED.
+Test float32 multiply (special numbers). [+,-]...  PASSED.
+Test float32 multiply (special numbers). [-,-]...  PASSED.
+Test float32 multiply (special numbers). [+,+]...  PASSED.
+Test float32 add (small numbers)... [+,+]...  PASSED.
+Test float32 add (small numbers)... [-,+]...  PASSED.
+Test float32 add (small numbers)... [+,-]...  PASSED.
+Test float32 add (small numbers)... [-,-]...  PASSED.
+Test float32 add (small numbers)... [+,+]...  PASSED.
+Test float32 add (medium numbers).. [+,+]...  PASSED.
+Test float32 add (medium numbers).. [-,+]...  PASSED.
+Test float32 add (medium numbers).. [+,-]...  PASSED.
+Test float32 add (medium numbers).. [-,-]...  PASSED.
+Test float32 add (medium numbers).. [+,+]...  PASSED.
+Test float32 add (big numbers)..... [+,+]...  PASSED.
+Test float32 add (big numbers)..... [-,+]...  PASSED.
+Test float32 add (big numbers)..... [+,-]...  PASSED.
+Test float32 add (big numbers)..... [-,-]...  PASSED.
+Test float32 add (big numbers)..... [+,+]...  PASSED.
+Test float32 add (special numbers). [+,+]...  PASSED.
+Test float32 add (special numbers). [-,+]...  PASSED.
+Test float32 add (special numbers). [+,-]...  PASSED.
+Test float32 add (special numbers). [-,-]...  PASSED.
+Test float32 add (special numbers). [+,+]...  PASSED.
+Test float32 sub (small numbers)... [+,+]...  PASSED.
+Test float32 sub (small numbers)... [-,+]...  PASSED.
+Test float32 sub (small numbers)... [+,-]...  PASSED.
+Test float32 sub (small numbers)... [-,-]...  PASSED.
+Test float32 sub (small numbers)... [+,+]...  PASSED.
+Test float32 sub (medium numbers).. [+,+]...  PASSED.
+Test float32 sub (medium numbers).. [-,+]...  PASSED.
+Test float32 sub (medium numbers).. [+,-]...  PASSED.
+Test float32 sub (medium numbers).. [-,-]...  PASSED.
+Test float32 sub (medium numbers).. [+,+]...  PASSED.
+Test float32 sub (big numbers)..... [+,+]...  PASSED.
+Test float32 sub (big numbers)..... [-,+]...  PASSED.
+Test float32 sub (big numbers)..... [+,-]...  PASSED.
+Test float32 sub (big numbers)..... [-,-]...  PASSED.
+Test float32 sub (big numbers)..... [+,+]...  PASSED.
+Test float32 sub (denorm numbers). [+,+]...  PASSED.
+Test float32 sub (denorm numbers). [-,+]...  PASSED.
+Test float32 sub (denorm numbers). [+,-]...  PASSED.
+Test float32 sub (denorm numbers). [-,-]...  PASSED.
+Test float32 sub (denorm numbers). [+,+]...  PASSED.
+Test float32 sub (special numbers). [+,+]...  PASSED.
+Test float32 sub (special numbers). [-,+]...  PASSED.
+Test float32 sub (special numbers). [+,-]...  PASSED.
+Test float32 sub (special numbers). [-,-]...  PASSED.
+Test float32 sub (special numbers). [+,+]...  PASSED.
