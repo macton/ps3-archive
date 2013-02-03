@@ -1,0 +1,570 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja"><head> <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"><title>Enable Your Distro</title><!-- $Id: HowToEnableYourDistro.html,v 1.46 2008/05/28 14:59:54 geert Exp $ --></head>
+<body lang="en-US"><h1 class="western">How to
+Enable Your Distro</h1>
+<p style="margin-bottom: 0in; margin-left: 40px;">&copy; 2008 Sony Computer Entertainment Inc.<br>
+&copy; 2006,2007,2008 Sony Corporation<br>
+</p><p style="margin-bottom: 0in; margin-left: 40px;">Permission
+is
+granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 published by the Free Software Foundation; with no Invariant
+Sections, no Front-Cover Texts, and no Back-Cover Texts. A copy of the
+license is included in the section entitled "GNU Free Documentation
+License".</p>
+<p style="margin-bottom: 0in; margin-left: 40px;">DISCLAIMER</p>
+<p style="margin-bottom: 0in; margin-left: 40px;">THIS
+DOCUMENT IS
+PROVIDED "AS IS," AND COPYRIGHT HOLDERS MAKE NO
+REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED, INCLUDING, BUT NOT
+LIMITED TO, WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE, NON-INFRINGEMENT, OR TITLE; THAT THE CONTENTS OF THE
+DOCUMENT ARE SUITABLE FOR ANY PURPOSE; NOR THAT THE IMPLEMENTATION OF
+SUCH CONTENTS WILL NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS,
+TRADEMARKS OR OTHER RIGHTS. COPYRIGHT HOLDERS
+WILL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL OR CONSEQUENTIAL
+DAMAGES ARISING OUT OF ANY USE OF THE DOCUMENT OR THE PERFORMANCE OR
+IMPLEMENTATION OF THE CONTENTS THEREOF.<br><br>TRADEMARK NOTICE</p><p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;"PLAYSTATION" and "PS3" are registered trademarks of Sony Computer
+Entertainment Inc. "Cell Broadband Engine" is a trademark of<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;Sony Computer Entertainment Inc. Linux&reg; is the registered
+trademark of Linus Torvalds in the U.S. and other countries.<br>&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;Other company, product and service names
+may be registered trademarks, trademarks or service marks of others.</p>
+<p class="western">As a hint of enabling your own
+distribution, we&#8217;ll
+show how to install existing free Linux distribution for PPC64.
+We&#8217;ll
+explain this using with Fedora Core 6 as an example.&nbsp;</p><h2 class="western">Install Fedora Core 6</h2>
+<h3 class="western">1. Abstract</h3>
+<p>This section shows how to install Fedora Core 6 on a
+PS3.
+</p><p>To install Fedora Core 6 on a PS3, you have to
+execute following
+steps.
+</p><ul> <li>Create a Linux partition on the HDD. </li>
+<li>Install boot loader. </li> <li>Set boot flag to
+'Other OS'.</li>
+</ul><p style="font-weight: bold; color: rgb(255, 0, 0);">For the person who have installed FC5 according to Distro Kit v1.1,
+install procedure described in this material will over writes and erase
+entire HDD with FC6.</p><h3 class="western">2. Requirements</h3>
+<h4>Hardware</h4>
+<ul> <li>PS3 which System Software version 2.10 or later
+is installed <ul> <li> Controller</li> <li>USB
+keyboard</li> <li> Monitor<br>
+The following will be used for output from a PS3. <ul> <li>HDTV
+monitor(supporting 480p, 1080i, 720p or 1080p)</li> <li>Connected
+with the HDMI connector or the AV
+MULTIOUT connector</li> </ul> </li> </ul> </li>
+</ul><h4>Software</h4>
+<ul>  <li>Fedora
+Core 6 PPC install DVD <ul> <li>You can get Fedora Core 6
+PPC install DVD from Fedora
+Project
+(<a href="http://fedora.redhat.com">http://fedora.redhat.com</a>/)</li>
+</ul> </li> <li>PS3 Linux Distributor's Starter Kit CD.<!--need to add description on Addon CD--></li>
+</ul><h3 class="western">3. Setup procedure.</h3>
+<h4>3.1 Setup your PS3.</h4>
+<h5>1) Connecting power cables.</h5>
+<h5>2) Connecting monitor</h5>
+<ul> <li>Connected with the HDMI connector or the AV
+MULTIOUT
+connector.</li>
+</ul><h5>3) Making other interface connections.</h5>
+<ul> <li>Connect the USB cable of the Controller to the
+USB
+connector.</li> <li>Connect the USB cable of the USB
+keyboard to the USB
+connector.</li>
+</ul><h4>3.2 How to create a Linux partition.</h4>
+<h5> 1) Turn on the PS3. After initializing, you can
+see GameOS menu.&nbsp; You select "Settings -&gt; System
+Settings".</h5>
+<h5>2) After selecting "Format Utility" from sub menu, following
+messages are displayed.</h5>
+<p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 40px; font-family: monospace;">Format
+Memory Stick<br>
+Format SD Memory Card<br>
+Format CompactFlash<br>
+Format Hard Disk
+</p><p style="line-height: 100%; widows: 0; orphans: 0;">To
+allocate a Linux partition on the Hard Disk, select "Format Hard
+Disk".</p>
+<h5> 3) After following message is displayed. you select 'Yes'.</h5>
+<p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 40px; font-family: monospace;">Do
+you want to format the hard disk?</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 180px; font-family: monospace;">Yes
+No</p><h5> 4) You can see following message.</h5>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">Select
+a partition setting for the hard disk.</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 100px; font-family: monospace;">Use
+All for the PS3 System<br>
+Custom</p>
+<p style="line-height: 100%; widows: 0; orphans: 0;"> To
+allocate a Linux partition on the Hard Disk, select "Custom".<br>
+After selecting "Custom", following messages are displayed.</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">Select
+a partition setting for the hard disk.</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 100px; font-family: monospace;">Use
+All for the PS3 System<br>
+Allot 10GB to the Other OS<br>
+Allot 10GB to the PS3 System</p>
+<p style="line-height: 100%; widows: 0; orphans: 0;"> To
+allocate a Linux partition on the Hard Disk, select one of following
+items.</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">Allot
+10GB to the Other OS<br>
+Allot 10GB to the PS3 System</p>
+<p style="line-height: 100%; widows: 0; orphans: 0;"> If
+your hard disk size is 20GB, you have to select 'Allot 10GB to the
+Other OS'.</p><h5> 5)&nbsp;After selecting the item,
+following messages are displayed.</h5><p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">Select
+the hard disk format method.</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 100px; font-family: monospace;">Quick
+Format<br>Full Format</p>You can select either&nbsp;
+'Full Format' or
+'Quick Format'.<br><h5>6)
+After following message is displayed. you select 'Yes'.</h5>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">If
+you format, all data will be deleted.<br>
+This data cannot be restored.<br>
+Are you sure you want to continue?</p><p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 150px; font-family: monospace;">Yes
+No</p><h5> 7)&nbsp;After selecting 'Yes', format
+process
+is started.</h5>
+<h5> 8) After creating a Linux partition, following messages are
+displayed.</h5>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">Format
+Complete.<br>
+Press the X button to restart the system.</p>
+<p style="line-height: 100%; widows: 0; orphans: 0;">After
+pressing the X button, restart the system software and you can
+see GameOS menu.</p>
+<h4>3.3 How to install kboot.</h4>
+<h5> 1)&nbsp; Insert Addon Packages CD to the BD drive of the
+PS3</h5>
+<h5> 2) Turn on the PS3. After initializing, you
+select "Settings -&gt; System Settings" by using GameOS menu.</h5>
+<h5> 3) After selecting "Install Other OS" from sub menu, the
+system search Other
+OS installer from flash memory device. After the system found. Other
+OS image, following messages are displayed.</h5>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">The
+following installer items were found:</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 100px; font-family: monospace; height: 24px;">&nbsp;&nbsp;&nbsp;Title
+/PS3/otheros/otheros.bld<br>Location Disc</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 200px; font-family: monospace;">Start</p>
+<p style="line-height: 100%; widows: 0; orphans: 0;"> If
+the system cannot find Other OS image, following message is
+displayed.</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">No
+applicable installer was found.</p>
+<p style="line-height: 100%; widows: 0; orphans: 0;"> If
+you see above message, please confirm the data on your CD.</p>
+<p style="line-height: 100%; widows: 0; orphans: 0;">After
+the system found Other OS image and you select 'Start', install process
+is started.</p><h5> 4) After finishing Other OS install,
+you can see the following messages.</h5><p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">Install
+completed.<br>To start another system, go to [Settings] &gt;
+[System Settings] &gt;<br>[Default System] and set to [Other
+OS]. Then restart the system.</p><p style="line-height: 100%; widows: 0; orphans: 0;">After
+pressing the O button, &nbsp;you can see the XMB menu</p><h4>3.4 Change the default system to boot</h4>
+<p style="line-height: 100%; widows: 0; orphans: 0;"> To
+start kboot, you have to change the default system to boot.</p>
+<h5> 1) Turn on the PS3. After initializing, you
+select "Settings -&gt; System Settings" by using GameOS menu.</h5>
+<h5> 2) After selecting "Default System" from sub menu, following
+messages are displayed.</h5>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">PS3<br>
+Other OS
+</p><h5> 3) After selecting "Other OS"&nbsp;, following
+messages are displayed.</h5><p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">Do
+you want to quit the PS3 system and start the other system<br>now?<br>&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; Yes&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; No<br></p><p style="line-height: 100%; widows: 0; orphans: 0;">After
+selecting 'Yes', &nbsp;kboot is automatically started.</p><h4>3.5
+How to install Fedora Core 6 on your PS3</h4><h5> 1) After displaying kboot prompt, you start a installer
+program. </h5>
+
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">kboot:
+install </p><h5> 2) After initializing a installer
+program, you can see the following messages.</h5><p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;"> Starting PS3 Linux installer<br>1) ps3da<br>Select device to install?</p><p style="line-height: 100%; widows: 0; orphans: 0;">
+There is one built-in hard disk drive in the PS3. <br>
+After initializing boot loader, this drive is recognized as 'ps3da'.</p>
+<p style="line-height: 100%; widows: 0; orphans: 0;">If you connected external USB hard disk drives with the PS3, these drives<br>are recognized as scsi devices. And you can see see the following messages.</p><p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">Starting PS3 Linux installer<br>1) ps3da<br>2) sda<br>Select device to install? </p><p style="line-height: 100%; widows: 0; orphans: 0;">You
+can select one of the hard disk drive for install. In this document, we assume that<br>Linux is installed on the built-in hard disk drive(= ps3da).&nbsp;<br></p><h5> 3) After&nbsp;selecting the device, PS3 Linux Distributor's Starter Kit CD is automatically ejected<br>and you can see the following messages.</h5><p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">Please
+insert Fedora Core install DVD.<br>
+Is it OK? (y/n): </p>
+<h5> 4) After&nbsp;you insert a Fedora Core 6 install DVD, type 'y'. Then you can see the following messages.</h5><p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">1)
+Fedora Core 6 minimum install<br>
+2) Fedora Core 6 full install<br>
+Select install system? </p>
+<p style="line-height: 100%; widows: 0; orphans: 0;">You
+can select one of them.</p>
+<h5> 5) After&nbsp;selecting the installation type,&nbsp;you can see the following messages.&nbsp;If you can save <br>the data on HDD, you
+have to backup them to another device.</h5><p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">Caution!!
+All data in /dev/ps3da are removed.<br>
+Is it OK? (y/n): </p>
+<h5> 6)&nbsp; To
+start Fedora Core 6 install, type 'y'.</h5><p style="line-height: 100%; widows: 0; orphans: 0;"> HDD
+is initialized as follows.</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;"><table><tbody>
+<tr> <td>Partition id &nbsp;</td>
+<td>Size</td> <td>Type</td> <td>Label</td>
+</tr> <tr> <td>1</td> <td>Max size -
+512MB &nbsp;</td> <td>Linux
+&nbsp;</td> <td>/1</td> </tr> <tr> <td>2</td>
+<td>512 MB</td> <td>swap</td> <td>SWAP-ps3da2</td>
+</tr> </tbody></table></p>
+<h5> 7)&nbsp;After
+installing Fedora Core 6, Fedora Core 6 install DVD is automatically
+ejected. <br>Next you can see following messages.</h5><p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">Please
+insert a&nbsp;PS3 Linux Distributor's Starter Kit CD.<br>
+Is it OK? (y/n)</p>
+<h5> 8) After&nbsp;you insert a&nbsp;PS3 Linux Distributor's Starter Kit CD, type 'y'. Then&nbsp;additional packages are
+installed.</h5><h5> 9)&nbsp;After
+installing&nbsp;addon packages,&nbsp;PS3 Linux Distributor's Starter Kit CD is automatically
+ejected. <br>And you can see following messages..</h5><p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 40px;"><span style="font-family: monospace;"> Install done.<br>Please type any key to restart :</span></p>
+<h5> 10) To start Linux, type any key.</h5><h5> 11) You can see Linux messages.</h5><p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">Fedora
+Core release 6 (Zod)<br>
+Kernel 2.6.24 on an ppc64<br>
+<br>localhost login:</p><br><h3 class="western">4. PS3 Linux Distributor's Starter Kit CD file layout</h3>We describes a file layout of the PS3 Linux Distributor's Starter Kit CD.<br><br>TOP directory<br><br>&nbsp; &nbsp; PS3 <br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;- otheros/otheros.bld &nbsp; &nbsp; &nbsp; (kboot binary file)<br><br>&nbsp; &nbsp; boot&nbsp;<br>&nbsp;
+&nbsp; &nbsp; &nbsp;&nbsp; - vmlinux &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(Linux
+kernel for the PS3 Linux installl program)<br>&nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp;- initrd.bin &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(PS3 Linux install
+program)<br><br>&nbsp; &nbsp; etc&nbsp;<br>&nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp;- kboot.conf &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;(kboot configuration file)<br><br>&nbsp; &nbsp; target<br>&nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;- *.rpm &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+(Additional packages for PS3 Linux)<br><br>&nbsp; &nbsp; doc<br>&nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp;- *.html &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (PS3
+Linux documents)<br><br>&nbsp; &nbsp; src &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;(PS3 Linux source codes)<br><br>After intializing kboot, kboot read a '/etc/kboot.conf' on the PS3 Linux Distributor's<br>Starter Kit CD. Current kboot.conf file is as follows.<span style="font-family: monospace;"></span><p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">default=install<br>root=/dev/sr0<br><br>install='/boot/vmlinux initrd=/boot/initrd.bin video=safe' </p>Vmlinux is a Linux kernel image for the PS3 Linux install program. <br>Initrd.bin is a PS3 Linux install program image.<br><br>After selecting 'install' entry, kboot read a vmlinux and initrd.bin and starts the PS3 LInux install<br>program. After initializing the PS3 Linux install program, /sbin/install-fc in the 'initrd.bin' image is<br>automatically executed. We describe the 'install-fc' more details in the next section.<br><br><h3 class="western">5. Additional information of
+&#8220;install-fc&#8221;
+</h3><p class="western">This section shows
+an
+internal structure of install-fc script. This scripts install the Fedora Core 6<br>files to the hard disk drive connected with a PS3.</p>
+<p class="western"> 1) Check command arguments.</p>
+<p class="western">2) Check Hard Disk size. If disk size
+is smaller then 9GB, you can not install linux.</p>
+<p class="western">3) Calculate disk partition size.</p>
+<p class="western">4) Disable screen saver.</p>
+<p class="western">5) Synchronize a linux clock with a
+game clock.</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">GAMETIME=`/sbin/ps3-flash-util -s | grep 'p\.rtc_diff' | grep -o '[0-9]*$'<br>/sbin/ps3-flash-util -F<br>/sbin/ps3-flash-util -D 2 1 ${GAMETIME}<br>
+hwclock -s <br>
+</p><p class="western">6) Mount Fedora Core install
+DVD and
+copy stage2.img file to ramdisk.</p>
+<p class="western">7) Mount stage2.img file and create
+install environment.</p>
+<p class="western">8) Select either 'minimum' install or
+'full' install.</p>
+<p class="western">9) Delete All partitions on the Hard
+Disk.</p>
+<p class="western">10) Create Linux and swap partition on
+the Hard Disk.</p>
+<p class="western">11) Mount Linux and swap partition.</p>
+<p class="western">12) Create some configuration files.</p>
+/etc/fstab
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">LABEL=/1 &nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+/&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+ext3&nbsp;&nbsp;&nbsp; defaults 1 1<br>
+/dev/devpts&nbsp;&nbsp;&nbsp; /dev/pts
+devpts&nbsp;&nbsp;gid=5,mode=620 0 0<br>
+/dev/shm&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;/dev/shm tmpfs &nbsp; defaults 0 0<br>
+none &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp; /spu
+&nbsp;&nbsp;&nbsp;&nbsp;spufs &nbsp; defaults 0
+0<br>
+/dev/proc&nbsp;&nbsp;&nbsp; &nbsp;
+/proc&nbsp;&nbsp;&nbsp; proc&nbsp;&nbsp;&nbsp;
+defaults 0 0<br>
+/dev/sys&nbsp;&nbsp;&nbsp; &nbsp;
+&nbsp;/sys&nbsp;&nbsp;&nbsp;
+&nbsp;sysfs&nbsp;&nbsp;&nbsp;defaults 0 0<br>
+LABEL=SWAP-ps3da2 &nbsp;&nbsp;
+&nbsp;swap&nbsp;&nbsp;&nbsp;
+&nbsp;swap&nbsp;&nbsp;&nbsp; defaults 0 0</p>
+<p>/etc/sysconfig/keyboard
+</p><p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">KEYTABLE="us"
+</p>
+/etc/sysconfig/i18n
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">LANG="en_US.UTF-8"<br>
+SYSFONT="latarcyrheb-sun16"
+</p>/etc/udev/makedev.d/45-ps3pf.nodes
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">hvc0
+</p>
+/etc/sysconfig/network
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">NETWORKING=yes<br>
+HOSTNAME=localhost.localdomain
+</p>/etc/resolv.conf
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;"></p>/etc/hosts
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">#
+Do not remove the following line, or various programs<br>
+# that require network functionality will fail.<br>
+127.0.0.1 localhost.localdomain localhost
+</p>/etc/sysconfig/authconfig
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">USEWINBINDAUTH=no<br>
+USEHESIOD=no<br>
+USESYSNETAUTH=no<br>
+USEKERBEROS=no<br>
+USESHADOW=yes<br>
+USESMBAUTH=no<br>
+USELDAPAUTH=no<br>
+USELOCAUTHORIZE=no<br>
+USEWINBIND=no<br>
+USEDB=no<br>
+USEPASSWDQC=no<br>
+USEMD5=yes<br>
+USELDAP=no<br>
+USECRACKLIB=yes<br>
+USENIS=no
+</p><p class="western">13) Initialize RPM database.</p>
+<p class="western">14) Install Fedora Core 6 RPM on the
+Hard Disk.
+</p><p class="western">15) Remove old RPM on the
+Hard Disk.</p>
+<p class="western">16) Eject Fedora Core install DVD.</p>
+<p class="western">17) Mount&nbsp;PS3 Linux Distributor's Starter Kit CD.</p>
+<p class="western">18) Install some PS3 specific RPMs.</p>
+<p class="western">19) Create and change some
+configuration files for PS3.</p>
+/etc/kboot.conf
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">default=linux<br>
+timeout=10<br>
+root=LABEL=/1<br>
+<br>safe='/boot/vmlinux-$KERNELVER initrd=/boot/initrd.img-$KERNELVER video=safe'<br>linux='/boot/vmlinux-$KERNELVER initrd=/boot/initrd.img-$KERNELVER '
+</p>/etc/sysconfig/clock
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">ZONE="Asia/Tokyo"<br>
+UTC=true<br>
+ARC=false<br>
+</p>/etc/localtime
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">cp
+/usr/share/zoneinfo/Japan /etc/localtime
+</p>/etc/sysconfig/modules/ps3pf.modules
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">#!/bin/sh<br>
+for i in snd_ps3pf;do<br>
+modprobe \$i &gt;/dev/null
+2&gt;&amp;1<br>
+done
+</p>/etc/alsa/cards/PS3.conf
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">PS3 sound configuration
+</p>/etc/rpm/platform
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">ppc64-redhat-linux
+</p>
+/etc/rpm/macros
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">%_transaction_color
+3
+</p>/etc/modprobe.conf
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">alias
+scsi_hostadapter ps3disk<br>alias scsi_hostadapter1 ps3rom<br>alias scsi_hostadapter2 ps3flash<br>
+alias usb-controller ehci-hcd<br>
+alias usb-controller1 ohci-hcd<br>
+</p>/etc/X11/xorg.conf<br>
+/etc/X11/xorg.conf-vfb
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">You
+should use xorg.conf file for virtual frame buffer
+</p>/etc/init.d/kudzu
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">disable
+X configuration&nbsp;
+</p><p class="western">20) Unmount all partitions</p>
+<p class="western">21) Eject&nbsp;PS3 Linux Distributor's Starter Kit CD.</p>
+<p class="western">22) Remove work files.</p><h3 class="western">5. kboot-Related Information</h3>
+<h4> (1) File systems and labels</h4>
+<p style="line-height: 100%; widows: 0; orphans: 0;">To
+address the problem that the device name of an USB storage device
+cannot uniquely
+identify the device, kboot and Linux commands identify file systems by
+their labels instead of their device names. The
+labeling convention is as follows:</p>
+<ul><li> A file system should be given a label that is
+the same as
+the name of the mounting point directory.<br>
+Example)<br> <table style="text-align: left; height: 193px; width: 249px;" border="0" cellpadding="2" cellspacing="2"> <tbody>
+<tr> <td>Mount
+Directory </td> <td>Label Name</td> </tr> <tr>
+<td>/</td> <td>/</td> </tr> <tr>
+<td>/boot</td> <td>/usr</td> </tr> <tr>
+<td>/var</td> <td>/var</td> </tr> <tr>
+<td>/home</td> <td>/home</td> </tr> <tr>
+<td>/tmp</td> <td>/tmp</td> </tr> </tbody>
+</table> </li><li style="font-family: monospace;">A
+device to be
+swapped should be labeled "SWAP".</li></ul><p style="line-height: 100%; widows: 0; orphans: 0;">There
+are some ways to label a file system.</p>
+<h5> 1-1. Setting Label at Creation of File System</h5>
+<p style="line-height: 100%; widows: 0; orphans: 0;">To
+put a "/" label on a partition to be named "ps3da1":
+</p><p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 40px;">ext2,
+ext3)</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">#
+mke2fs -j -L / /dev/ps3da1</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 40px;">xfs)</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">#
+mkfs.xfs -L / /dev/ps3da1</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 40px;">reiserfs)</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">#
+mkreiserfs -l / /dev/ps3da1</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 40px;" lang="de-DE"> FAT)</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">#
+mkfs.vfat -n / /dev/ps3da1</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 40px;">(Note)
+The number of characters for a label specified with mkfs.vfat must be
+11 or less.</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 40px;">swap)</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">#
+mkswap -L SWAP /dev/ps3da2</p>
+<h4> 1-2. Changing Label on Existing File System</h4>
+<p style="line-height: 100%; widows: 0; orphans: 0;">To
+put a "/" label on an existing partition named "ps3da1":</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 40px;">ext2,
+ext3)</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">#
+e2label /dev/ps3da1 /</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 40px;">xfs)</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">#
+xfs_admin -L / /dev/ps3da1</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 40px;">reiserfs)</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">#
+reiserfstune -l / /dev/ps3da1</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 40px;">Some
+of the commands may also be used to display the current file
+system
+label.</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 40px;">ext2,
+ext3)</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">#
+e2label /dev/ps3da1</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 40px;" lang="de-DE"> xfs)</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">#
+xfs_admin -l /dev/ps3da1</p>
+<p style="line-height: 100%; widows: 0; orphans: 0;">The
+following labelling procedure assumes that the built-in HDD is seen
+as
+/dev/ps3da1.</p>
+<p style="line-height: 100%; widows: 0; orphans: 0;">First,
+initialize /dev/sda1 with ext3 adding a "/" label.</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">#
+mke2fs -j -L / /dev/ps3da1</p>
+<h4> (2) Settings for Using Labels</h4>
+<p style="line-height: 100%; widows: 0; orphans: 0;">/etc/fstab</p>
+<p style="line-height: 100%; widows: 0; orphans: 0;"> At
+startup of Linux, file systems are mounted according to /etc/fstab. </p>
+<p style="line-height: 100%; widows: 0; orphans: 0;"> To
+address the problem that the device name of an USB storage device
+cannot uniquely
+identify the device, a storage device must be identified with its
+label instead of the device name in the /etc/fstab file.</p>
+<p style="line-height: 100%; widows: 0; orphans: 0;">Usual
+</p><p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 40px;"><span style="font-family: monospace;">/dev/ps3da1&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ext3&nbsp;&nbsp;&nbsp;
+defaults&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;
+&nbsp;1 1</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">/dev/devpts&nbsp;&nbsp;&nbsp;
+/dev/pts&nbsp;&nbsp;devpts&nbsp;gid=5,mode=620&nbsp;
+&nbsp;0 0</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">/dev/shm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/dev/shm&nbsp;tmpfs&nbsp;&nbsp;
+defaults&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;
+0 0</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">none
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;/spu&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;spufs&nbsp;&nbsp;
+defaults&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;0 0</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">/dev/proc&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+/proc&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;proc&nbsp;&nbsp;&nbsp;defaults&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;
+0 0</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">/dev/sys&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/sys&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;sysfs&nbsp;&nbsp;
+defaults&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;0 0</span><br style="font-family: monospace;">
+<span style="font-family: monospace;">/dev/ps3da2&nbsp;&nbsp;&nbsp;&nbsp;swap&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;swap&nbsp;&nbsp;&nbsp;
+defaults&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;0 0</span>
+</p><p style="line-height: 100%; widows: 0; orphans: 0;">With
+labels used</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">LABEL=/1 &nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+ext3&nbsp;&nbsp;&nbsp; defaults &nbsp; &nbsp;
+&nbsp; &nbsp; 1 1<br>
+/dev/devpts&nbsp;&nbsp;&nbsp; /dev/pts
+devpts&nbsp;&nbsp;gid=5,mode=620 &nbsp; 0 0<br>
+/dev/shm&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;/dev/shm tmpfs &nbsp; defaults
+&nbsp; &nbsp; &nbsp; &nbsp; 0 0<br>
+none &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp; /spu
+&nbsp;&nbsp;&nbsp;&nbsp;spufs &nbsp; defaults
+&nbsp; &nbsp; &nbsp; &nbsp; 0
+0<br>
+/dev/proc&nbsp;&nbsp;&nbsp; &nbsp;
+/proc&nbsp;&nbsp;&nbsp; proc&nbsp;&nbsp;&nbsp;
+defaults &nbsp; &nbsp; &nbsp; &nbsp; 0 0<br>
+/dev/sys&nbsp;&nbsp;&nbsp; &nbsp;
+&nbsp;/sys&nbsp;&nbsp;&nbsp;
+&nbsp;sysfs&nbsp;&nbsp;&nbsp;defaults &nbsp;
+&nbsp; &nbsp; &nbsp; 0 0<br>
+LABEL=SWAP-ps3da2 &nbsp;&nbsp;
+&nbsp;swap&nbsp;&nbsp;&nbsp;
+&nbsp;swap&nbsp;&nbsp;&nbsp; defaults &nbsp;
+&nbsp; &nbsp; &nbsp; 0 0</p>
+<p style="line-height: 100%; widows: 0; orphans: 0;">/etc/blkid.tab</p>
+<p style="line-height: 100%; widows: 0; orphans: 0;"> This
+file acts as cache for mapping between labels/UUIDs and device names.
+This file should be removed when a device name is changed to avoid the
+use
+of the old cache file for the mapping. </p>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">#
+rm /etc/blkid/blkid.tab</p>
+<h4> (3) Kernel and initrd </h4>
+<p style="line-height: 100%; widows: 0; orphans: 0;"> The
+kernel and intrd should be placed in /boot with the file names
+specified
+in kboot.conf. The initrd must contain modules necessary to mount the
+root partition. See man mkintrd for details. This release includes a
+bootloader/initrd.img
+file, which is created in the environment described below.</p>
+<p style="line-height: 100%; widows: 0; orphans: 0;">Generation
+Environment</p>
+<p style="line-height: 100%; widows: 0; orphans: 0;"> -
+Kernel: the one included in kernel-2.6.24-20080131.ppc64.rpm </p>
+<p style="line-height: 100%; widows: 0; orphans: 0;"> -
+Root partition: ext3 file system</p>
+<p style="line-height: 100%; widows: 0; orphans: 0;"> -
+Contents of /etc/modprobe.conf:</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">alias
+scsi_hostadapter ps3disk<br>alias
+scsi_hostadapter1 ps3rom<br>alias scsi_hostadapter2 ps3flash<br>
+alias usb-controller ehci-hcd<br>
+alias usb-controller1 ohci-hcd</p>
+<p style="line-height: 100%; widows: 0; orphans: 0;">-
+Command executed to generate the image
+</p><p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">#
+/sbin/mkinitrd --preload=ps3disk --preload=ps3rom --preload=ps3flash --with-usb initrd.img-2.6.24 2.6.24</p><p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;"></p>
+<h3 class="western">7. How to build kboot</h3>&nbsp;This section shows how to build a kboot binary from source code.<br><ul><li>You have to build&nbsp;kboot as root user.</li><li>At first, you extract&nbsp; kboot source codes.
+    <p style="line-height: 100%; font-family: monospace; margin-left: 40px;">
+# tar jxf kboot-YYYYMMDD.tar.bz2<br>
+# cd kboot-YYYYMMDD </p>
+  </li><li> You can start compiling kboot as follows.
+    <p style="line-height: 100%; font-family: monospace; margin-left: 40px;">
+# yes "" | make </p></li><li>You can see a kboot binary file in kboot-11 directory.<p style="line-height: 100%; font-family: monospace; margin-left: 40px;">
+# cd kboot-11<br>#&nbsp;ls -l otheros.bld<br>-rw-r--r-- 1 root root 2416930 Jun 28 16:20 otheros.bld</p></li></ul><p class="western"></p>
+<h2>Revision History</h2>
+<table style="width: 100%;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr><td style="text-align: center;">1.7</td><td style="text-align: center;">Mar 25 2008</td><td>Correct kboot build command</td></tr>
+    <tr><td style="text-align: center;">1.6</td><td style="text-align: center;">Feb 1 2008</td><td>Update PS3 System software version for PS3 Linux</td></tr>
+    <tr><td style="text-align: center;">1.5</td><td style="text-align: center;">Oct 26 2007</td><td>Update PS3 System software version for PS3 Linux</td></tr>
+    <tr><td style="text-align: center;">1.4</td><td style="text-align: center;">Aug 17 2007</td><td>Change built-in HDD device name. Update kboot kernel version</td></tr>
+    <tr><td style="text-align: center;">1.3</td><td style="text-align: center;">Apr 25 2007</td><td>Support PS3 System Software 1.60. Update to Fedora Core 6</td></tr>
+    <tr><td style="text-align: center;">1.1</td><td style="text-align: center;">Dec 8 2006</td><td>Added "Revision History" and &nbsp;"About This Document"</td></tr>
+    <tr><td style="text-align: center;">1.0</td><td style="text-align: center;">Nov 11 2006</td><td>Initial Revision</td></tr>
+  </tbody>
+</table><p class="western"></p></body></html>

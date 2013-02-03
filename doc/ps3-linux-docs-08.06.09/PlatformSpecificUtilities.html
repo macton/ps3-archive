@@ -1,0 +1,413 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja"><head>
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+  <title>Platform Specific Utilities</title><!-- $Id: PlatformSpecificUtilities.html,v 1.26 2008/05/28 15:33:49 geert Exp $ --></head>
+<body lang="en-US">
+
+
+<h1 style="margin-bottom: 0.2in;">Platform Specific Utilities</h1>
+
+
+<p style="margin-bottom: 0in; margin-left: 40px;">&copy; 2008 Sony Computer Entertainment Inc.<br>
+&copy; 2006,2007,2008 Sony Corporation<br>
+</p>
+
+
+<p style="margin-bottom: 0in; margin-left: 40px;">Permission
+is
+granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 published by the Free Software Foundation; with no Invariant
+Sections, no Front-Cover Texts, and no Back-Cover Texts. A copy of
+the license is included in the section entitled "GNU Free
+Documentation License".</p>
+
+
+<p style="margin-bottom: 0in; margin-left: 40px;">DISCLAIMER</p>
+
+
+<p style="margin-bottom: 0in; margin-left: 40px;">THIS
+DOCUMENT IS
+PROVIDED "AS IS," AND COPYRIGHT HOLDERS MAKE NO
+REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED, INCLUDING, BUT NOT
+LIMITED TO, WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE, NON-INFRINGEMENT, OR TITLE; THAT THE CONTENTS OF THE
+DOCUMENT ARE SUITABLE FOR ANY PURPOSE; NOR THAT THE IMPLEMENTATION OF
+SUCH CONTENTS WILL NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS,
+TRADEMARKS OR OTHER RIGHTS. COPYRIGHT HOLDERS
+WILL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL OR CONSEQUENTIAL
+DAMAGES ARISING OUT OF ANY USE OF THE DOCUMENT OR THE PERFORMANCE OR
+IMPLEMENTATION OF THE CONTENTS THEREOF.</p><p style="margin-left: 40px;">TRADEMARK NOTICE</p><p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;"PLAYSTATION" and "PS3" are registered trademarks of Sony Computer
+Entertainment Inc. "Cell Broadband Engine" is a trademark of<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;Sony Computer Entertainment Inc. Linux&reg; is the registered
+trademark of Linus Torvalds in the U.S. and other countries.<br>&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;Other company, product and service names
+may be registered trademarks, trademarks or service marks of others.</p>
+
+
+
+
+
+<p><!-- $Id: PlatformSpecificUtilities.html,v 1.26 2008/05/28 15:33:49 geert Exp $" -->This note
+explains PS3 platform
+specific utilities which come with the release of Linux on
+PS3.</p>
+
+
+<h2>ps3-video-mode: switch video mode dynamically</h2>
+
+
+<p>The ps3-video-mode utility is used to display or change the video
+mode of the PS3 game console. The default behavior is to display
+the current video mode ID.</p>
+
+
+<dl>
+  <dt>usage:</dt>
+</dl>
+
+<dl><dd><pre>
+ps3-video-mode [-m, --mode mode-id] [-r, --rgb] [-f, --full-screen]
+               [-g, --full-range] [-d, --dither] [-h, --help]
+               [-V, --version]
+</pre></dd></dl>
+
+<dl>
+  <dt>options:</dt>
+</dl>
+
+<dl><dd><pre>
+-m, --mode mode-id
+        Set the system video mode to mode-id.  See the NOTES section
+        below for more information on the mode-id value.
+
+-r, --rgb
+        Use RGB color space mode.
+
+-f, --full-screen
+        Use full screen mode.
+
+-g, --full-range
+        Use full range mode.
+
+-d, --dither
+        Use dither mode.
+
+-h, --help
+        Print a help message.
+
+-V, --version
+        Display the program version number.
+
+Video Mode IDs and Mode Names
+ The supported video mode-id values, coresponding mode-name values, and
+ screen resolutions are as follows:
+
+       AUTO Detect Mode:
+              0: auto (480i/576i if not HDMI)
+
+       60 Hz Broadcast Modes:
+              1: 480i    (576 x 384)
+              2: 480p    (576 x 384)
+              3: 720p   (1124 x 644)
+              4: 1080i  (1688 x 964)
+              5: 1080p  (1688 x 964)
+
+       50 Hz Broadcast Modes:
+              6: 576i    (576 x 460)
+              7: 576p    (576 x 460)
+              8: 720p   (1124 x 644)
+              9: 1080i  (1688 x 964)
+              10: 1080p  (1688 x 964)
+       VESA Modes:
+              11: wxga   (1280 x 768)
+              12: sxga   (1280 x 1024)
+              13: wuxga  (1920 x 1200)
+
+       60 Hz Full Screen Broadcast Modes:
+              129: 480if   (720 x 480)
+              130: 480pf   (720 x 480)
+              131: 720pf  (1280 x 720)
+              132: 1080if (1920 x 1080)
+              133: 1080pf (1920 x 1080)
+
+       50 Hz Full Screen Broadcast Modes:
+              134: 576if   (720 x 576)
+              135: 576pf   (720 x 576)
+              136: 720pf  (1280 x 720)
+              137: 1080if (1920 x 1080)
+              138: 1080pf (1920 x 1080)
+
+Note that VESA modes are only valid for the HDMI port.
+
+The mode options --rgb, --full-screen, --full-range and --dither can be
+specified via the mode-id as follows:
+
+           RGB color space:  &lt;video mode ID&gt; + 32
+           Full screen mode: &lt;video mode ID&gt; + 128
+           Full range mode:  &lt;video mode ID&gt; + 1536
+           Dither mode:      &lt;video mode ID&gt; + 2048
+
+RGB Color Space Mode
+ The RGB color space mode --rgb is only valid for the analog port.  The
+ default is to use the YUV color space.
+
+Full Screen Mode
+ Originally 480/576i, 480/576p, 720p, 1080i, and 1080p were analog broadcast 
+ resolutions that included overscan.  The full screen mode option --full-screen 
+ causes the overscan region of the broadcast modes to be used for pixel display.  
+ Not all displays can support full screen mode.
+
+RGB Full Range Mode
+ The full range mode --full-range adjusts the dynamic range of the video
+ output RGB values.
+
+ This setting affects the video output signal on both the analog and HDMI
+ ports, but is only useful with some HDMI displays.  When this option is
+ not enabled the video output signal will have an RGB dynamic range of 16
+ to 235, and when enabled will have an RGB dynamic range of 0 to 255.
+ This option must be specified by the user because the HDMI information
+ received from the attached display does not specify whether the display
+ supports RGB full range mode or not.
+
+Dither Mode
+ The dither mode option --dither suppresses the Mach Band Effect.  See
+ http://en.wikipedia.org/wiki/Mach_bands.
+
+Other Notes
+ Don't change the display resolution while sound is playing.
+
+ Don't change the display resolution from X.  If you do, you will need to
+ restart the X server.  This is because the X frame buffer driver assumes
+ a frame buffer has a fixed line length.
+
+ If you would like to boot Linux into a specific video mode you may pass a
+ video mode option on the kernel the command line.  Two formats are available.  
+ One uses a video mode name as video=mode-name, and the other uses
+ a video mode-id as video=ps3fb:mode:mode-id.  See the EXAMPLES section
+ below for more information
+</pre></dd></dl>
+
+
+<dl>
+  <dt>example:</dt>
+</dl>
+
+<dl><dd><pre>
+Examples (1) and (2) are equivalent, and both set the video mode to 60Hz
+720p full screen:
+
+           ps3-video-mode --mode=3 --full-screen    (1)
+           ps3-video-mode --mode=131                (2)
+</pre></dd></dl>
+
+
+<h2>ps3-boot-game-os: shutdown linux and switch to game os</h2>
+
+
+<p>This command switches boot
+flag in &#8220;other-os flash area&#8221; to boot game os, and
+reboot
+onto game os. This command requires root privilege.</p>
+
+<dl>
+  <dt>usage:</dt>
+</dl>
+
+<dl><dd><pre>
+ps3-boot-game-os [-n, --no-reboot | -p, --poweroff] [-h, --help] [-V, --version]
+</pre></dd></dl>
+
+<dl>
+  <dt>options:</dt>
+</dl>
+
+<dl><dd><pre>
+-n, --no-reboot
+        Don't reboot the system after setting the boot flag.
+
+-p, --poweroff
+        Power the system off after setting the boot flag.
+
+-h, --help
+        Print a help message.
+
+-V, --version
+        Display the program version number
+</pre></dd></dl>
+
+
+<h2>ps3-flash-util: PS3 flash memory utility</h2>
+
+
+<p>The ps3-flash-util utility is used to operate on the system flash ROM of the PS3 game console.</p>
+
+<dl>
+  <dt>usage:</dt>
+</dl>
+
+<dl><dd><pre>
+ps3-flash-util [-d, --device flash-dev] [-s, --show-settings]
+               [-w, --write-image image-file]
+               [-g, --set-game-os | -o, --set-other-os]
+               [-r, --set-raw | -z, --set-gzip] [-t, --game-time]
+               [-T, --db-test] [-F, --db-format]
+               [-P, --db-print owner key]
+               [-D, --db-write-dword owner key dword]
+               [-W, --db-write-word owner key word]
+               [-H, --db-write-half owner key half]
+               [-R, --db-remove owner key] [-L, --db-list-known]
+               [-h, --help] [-v, --verbose] [-V, --version]
+</pre></dd></dl>
+
+<dl>
+  <dt>options:</dt>
+</dl>
+
+
+<dl><dd><pre>
+-d, --device flash-dev
+        Use the flash device node flash-dev (default=/dev/ps3flash).
+
+-s, --show-settings
+        Show the current flash settings (non-destructive).
+
+-w, --write-image image-file
+        Write the Other OS image image-file to flash memory and update
+        the OS area header with information for the new image.  This is
+        the option to use to write a new bootloader image to flash
+        memory.  Use '-' for data on stdin.
+
+-g, --set-game-os
+        Set the system boot flag to Game OS.
+
+-o, --set-other-os
+        Set the system boot flag to Other OS.
+
+-r, --set-raw
+        Set the Other OS image compression flag to raw (not compressed).
+
+-z, --set-gzip
+        Set the Other OS image compression flag to gzip compressed.
+
+-t, --game-time
+        Print the Game OS RTC diff value.
+
+-T, --db-test
+        Test for the existence of an Other OS database in flash memory.
+        Exits with a zero status if a database is found.
+
+-F, --db-format
+        Format (write) an empty Other OS database to flash memory.  Any
+        existing data in the flash memory will be lost.
+
+-P, --db-print owner key
+        Print owner:key database entries.  A negative one (-1) value for
+        owner or key can be used as a wildcard to match any owner or key.
+
+-D, --db-write-dword owner key dword
+        Add or update a 64 bit owner:key database entry.  The dword argument 
+        supports input matching the scanf "%Li" format specification.
+
+-W, --db-write-word owner key word
+        Add or update a 32 bit owner:key database entry.  The word argument 
+        supports input matching the scanf "%Li" format specification.
+
+-H, --db-write-half owner key half
+        Add or update a 16 bit owner:key database entry.  The half argument
+        supports input matching the scanf "%Li" format specification.
+
+-R, --db-remove owner key
+        Remove an owner:key entry from the database.  A negative one (-1)
+        value for owner or key can be used as a wildcard to match any
+        owner or key.
+
+-L, --db-list-known
+        List known database owners and keys.
+
+-h, --help
+        Print a help message.
+
+-v, --verbose
+        Program verbosity level.  The level is additive.
+
+-V, --version
+        Display the program version number.
+</pre></dd></dl>
+
+
+<h2>ps3-dump-bootloader: PS3 dump bootloader utility</h2>
+
+<p>The ps3-dump-bootloader utility will dump the Other OS binary image from PS3 flash memory to stdout.</p>
+
+
+<dl>
+  <dt>usage:</dt>
+</dl>
+
+<dl><dd><pre>
+ps3-dump-bootloader [-s, --sum] [-h, --help] [-V, --version]
+</pre></dd></dl>
+
+<dl>
+  <dt>options:</dt>
+</dl>
+
+<dl><dd><pre>
+-s, --sum
+        Compute the md5sum of the Other OS image and only print it to stdout.
+
+-h, --help
+        Print a help message.
+
+-V, --version
+        Display the program version number.
+</pre></dd></dl>
+
+
+<h2>ps3-rtc-init: PS3 RTC init utility</h2>
+
+<p>The ps3-rtc-init utility is used to initialize the Linux RTC diff
+value in PS3 flash memory to that currently in use by the Game
+OS.  The default behavior is to not overwrite an existing value.</p>
+
+
+<dl>
+  <dt>usage:</dt>
+</dl>
+
+<dl><dd><pre>
+ps3-rtc-init [-f, --force] [-h, --help] [-V, --version]
+</pre></dd></dl>
+
+<dl>
+  <dt>options:</dt>
+</dl>
+
+<dl><dd><pre>
+-f, --force
+        Overwrite any existing Linux RTC diff value in flash memory.
+
+-h, --help
+        Print a help message.
+
+-V, --version
+        Display the program version number.
+</pre></dd></dl>
+
+
+<h2>Revision History</h2>
+
+<table border="1" cellpadding="2" cellspacing="2" width="100%">
+  <tbody>
+    <tr><td style="text-align: center;">1.7</td><td style="text-align: center;">May 28 2008</td><td>Update ps3-flash-util manual</td></tr>
+    <tr><td style="text-align: center;">1.6</td><td style="text-align: center;">Feb 2 2008</td><td>Add ps3-dump-bootloader and ps3-rtc-init<br>Change ps3-video-mode, ps3-flash-util and ps3-boot-gameos specification</td></tr>
+    <tr><td style="text-align: center;">1.5</td><td style="text-align: center;">Oct 26 2007</td><td>Change ps3-flash-util specification</td></tr>
+    <tr><td style="text-align: center;">1.4</td><td style="text-align: center;">Aug 17 2007</td><td>Change command name<br>Update copyright</td></tr>
+    <tr><td style="text-align: center;">1.3</td><td style="text-align: center;">Apr 25 2007</td><td>Update copyright</td></tr>
+    <tr><td style="text-align: center;">1.1</td><td style="text-align: center;">Dec 8 2006</td><td>Added "Revision History" and "About This Document"</td> </tr>
+    <tr><td style="text-align: center;">1.0</td><td style="text-align: center;">Nov 11 2006</td><td>Initial Revision</td></tr>
+  </tbody>
+</table>
+<p></p>
+
+
+</body></html>

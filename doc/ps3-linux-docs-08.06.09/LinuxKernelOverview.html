@@ -1,0 +1,649 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+
+  <title>Linux Kernel Overview</title><!-- $Id: LinuxKernelOverview.html,v 1.41 2008/05/28 14:59:55 geert Exp $ --></head>
+<body lang="en-US">
+
+
+
+<h1>Linux Kernel&nbsp;Overview</h1>
+
+
+
+
+
+<p style="margin-left: 40px;">&copy; 2008 Sony Computer Entertainment Inc.<br> 
+&copy; 2006,2007,2008 Sony Corporation
+
+</p>
+
+
+
+
+
+<p style="margin-left: 40px;">Permission is
+
+granted to copy, distribute and/or modify this document under the
+
+terms of the GNU Free Documentation License, Version 1.2 published by the Free Software Foundation; with no Invariant
+
+Sections, no Front-Cover Texts, and no Back-Cover Texts. A copy of the
+
+license is included in the section entitled "GNU Free Documentation
+
+License".</p>
+
+
+
+
+
+<p style="margin-left: 40px;">DISCLAIMER</p>
+
+
+
+<p style="margin-left: 40px;">THIS DOCUMENT IS
+
+PROVIDED "AS IS," AND COPYRIGHT HOLDERS MAKE NO REPRESENTATIONS OR
+
+WARRANTIES, EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO,
+
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE,
+
+NON-INFRINGEMENT, OR TITLE; THAT THE CONTENTS OF THE DOCUMENT ARE
+
+SUITABLE FOR ANY PURPOSE; NOR THAT THE IMPLEMENTATION OF SUCH CONTENTS
+
+WILL NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS OR
+
+OTHER RIGHTS. COPYRIGHT HOLDERS WILL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL
+
+OR CONSEQUENTIAL DAMAGES ARISING OUT OF ANY USE OF THE DOCUMENT OR THE
+
+PERFORMANCE OR IMPLEMENTATION OF THE CONTENTS THEREOF.</p><p style="margin-left: 40px;">TRADEMARK NOTICE</p><p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;"PLAYSTATION" and "PS3" are registered trademarks of Sony Computer
+
+Entertainment Inc. "Cell Broadband Engine" is a trademark of<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;Sony Computer Entertainment Inc. Linux&reg; is the registered
+
+trademark of Linus Torvalds in the U.S. and other countries.<br>&nbsp;&nbsp;&nbsp;
+
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;Other company, product and service names
+
+may be registered trademarks, trademarks or service marks of others.</p>
+
+
+
+
+
+<p>This document gives an overview
+
+of the PS3 Linux kernel and&nbsp;device drivers.</p>
+
+
+
+
+
+<h2>Overview</h2>
+
+
+
+
+
+<p>The Linux kernel runs on the top of the PS3
+
+hypervisor.&nbsp;&nbsp;Most
+
+devices and system resources are virtualized by the hypervisor. Linux
+
+device drivers have been created and/or modified to work with
+
+virtualized
+
+devices.&nbsp;&nbsp; Fig.1 illustrates structure of Linux Kernel and
+
+device drivers.</p>
+
+
+
+
+
+<p style="text-align: center;"><img style="width: 594px; height: 381px;" alt="Linux Kernel Structure" src="Figs/f1_14.png" hspace="113" vspace="80"><br>
+
+Fig. 1 Structure of the PS3 Linux kernel
+
+</p>
+
+
+
+
+
+<p>The Linux kernel can access some devices directly (e.g. USB host
+
+controllers).&nbsp;&nbsp;Other devices are virtualized by hypervisor
+
+and device service is provided via hypervisor calls.&nbsp;&nbsp;For
+
+example, storage service hypervisor calls are
+
+available.&nbsp;&nbsp;See following sections for detail.</p>
+
+
+
+
+
+<h2>Platform Specific Devices</h2>
+
+
+
+
+
+<h3>Storage (Module name: ps3disk/ps3rom/ps3flash)</h3>
+
+
+
+
+
+<p>PS3 storage devices includes HDD, Blu-ray Disc drive (BD drive) and
+
+flash ROM.&nbsp;&nbsp;These devices are connected via Cell Broadband Engine.&#8217;s
+
+companion chip.&nbsp;&nbsp;Accessing these devices is performed by
+
+dedicated hypervisor calls.&nbsp;&nbsp;These hypervisor calls consist
+
+of simple straightforward methods: open, close, read, write and
+
+ioctl.&nbsp;&nbsp;Most of all methods are asynchronous, that is,
+
+methods will return immediately after call, and then the caller must
+
+wait for its completion via other method.&nbsp;&nbsp;These completions
+
+are notified by virtualized interrupts.&nbsp;&nbsp;The status of
+
+results of these asynchronous methods can be retrieved via the
+
+specific hypervisor call.&nbsp;&nbsp;Since the BD drive is basically
+
+ATAPI device, Linux can issue ATAPI commands by hypervisor
+
+ioctl.&nbsp;&nbsp;Some of ATAPI commands have been rejected by the
+
+hypervisor because of security issues.</p>
+
+
+
+
+
+<p>PS3 Linux Disk storage driver is a block device driver(Module name:
+
+ps3disk). So the built-in HDD is accessed as /dev/ps3da. PS3 Linux
+
+BD/DVD/CD-ROM storage driver is implemented just like the usb storage
+
+driver does(Module name ps3rom).&nbsp;&nbsp;That is, the driver behaves
+
+as SCSI host
+
+controller driver and the storage devices themselves are as SCSI
+
+devices.&nbsp;&nbsp;So the built-in BD drive is accessed as SCSI
+
+&nbsp;CD-ROM, like
+
+/dev/sr0.&nbsp; The PS3 Linux FLASH ROM storage driver is a misc
+
+character divice driver(Module name: ps3flash).&nbsp;&nbsp;
+
+FLASH ROM is accessed as /dev/ps3flash.&nbsp;</p>
+
+
+
+
+
+<p>The Storage probe code uses a thread that keeps on scanning for new
+
+devices, until no new device has shown up in the last 60 seconds.</p>
+
+
+
+
+
+<h3>Audio (Module name: snd_ps3)</h3>
+
+
+
+
+
+<p>PS3 Audio hardware can be divided into two parts; front end part and
+
+back end part.</p>
+
+
+
+
+
+<p>The front end part is PS3 audio chip itself, the back end part consists
+
+HDMI driver chip, digital to analog converter for AV Multi interface,
+
+Optical Digital Out (IEC60958/SPDIF) device and base clock generators
+
+for 44.1KHz/48KHz audio clocks.&nbsp;&nbsp;Front end chip can be
+
+controlled by guest OSes through conventional register
+
+access.&nbsp;&nbsp;To gain the access of these registers the guest OS
+
+must issue dedicated hypervisor call and then ioremap.&nbsp;&nbsp;The front
+
+end chip has simple structure, which reads(DMAs) PCM data into its
+
+buffer and put them out with specified clock and format.&nbsp;&nbsp;No
+
+special hardware to support to decode compressed audio, like MP3, is
+
+equipped.&nbsp;&nbsp;Unlike AC97, the front end chip does not have
+
+volume control.&nbsp;&nbsp; Guest OSes should modify supplying digital
+
+PCM audio data into the chip if it wants to control volume.</p>
+
+
+
+
+
+<p>The back end audio devices are completely controlled by called
+
+&#8216;AV setting driver&#8217;.&nbsp;&nbsp;Setting up sample
+
+frequency and data format consistently between back end and front end
+
+is the role of the AV setting driver.&nbsp;&nbsp;Since the AV setting
+
+driver resides behind hypervisor, guest OS should use virtual UART to
+
+communicate with it.</p>
+
+
+
+
+
+<p>The Linux driver for this audio is composed under ALSA driver
+
+framework, not OSS.</p>
+
+
+
+
+
+<h3>Graphics/Video (Module name: ps3fb)</h3>
+
+
+
+
+
+<p>PS3 has a powerful graphic processing unit with high speed host
+
+connection.&nbsp;&nbsp;The GPU is connected to both HDMI and AV multi
+
+interface.&nbsp;&nbsp; Although the GPU is connected directly to CBE,
+
+no direct access by guest OSes to the GPU is allowed
+
+currently.&nbsp;&nbsp;Video mode/format setting is also the role of AV
+
+setting driver.&nbsp;&nbsp;PS3 Linux fb driver calls AV setting driver
+
+to setup video modes.</p>
+
+
+
+
+
+<p>Currently X server uses virtual frame buffer to render its
+
+image.&nbsp;&nbsp; No hardware acceleration is supported under
+
+Linux.&nbsp;&nbsp;See the description above section.</p>
+
+
+
+
+
+<h3>Giga Bit Ethernet(GbE) (Module name: ps3_gelic)</h3>
+
+
+
+
+
+<p>PS3 has built-in giga bit ethernet controller.&nbsp;&nbsp;Unlike
+
+conventional PC&#8217;s ethernet controllers, it is not a PCI
+
+device.&nbsp;&nbsp;It is connected to companion chip
+
+directly.&nbsp;&nbsp;To access or setup the chip, guest OSes should
+
+use dedicated hypervisor calls.&nbsp;&nbsp;This controller has its
+
+dedicated DMA controller, thus transferring data is automatically
+
+sent/received without PPE interventions.&nbsp;&nbsp;There is also
+
+dedicated hypervisor call to set up DMAC.</p>
+
+
+
+
+
+<p>VLAN framework is internally used for the built-in
+
+controller.&nbsp;&nbsp; Therefore, conventional VLAN can&#8217;t be
+
+used.&nbsp;&nbsp;PROMISC network mode is not supported with this
+
+controller.</p>
+
+
+
+
+
+<h3>Wireless &nbsp;</h3>
+
+
+
+
+
+<p>Some models of PS3 have built-in 802.11b/g wireless
+  hardware.&nbsp;&nbsp; It supports hadware encryption/decryption of WEP, TKIP
+  and CCMP(AES) so that PS3 can connect to WPA and WPA2
+  APs.&nbsp;&nbsp; This wireless does not support ad-hoc mode nor
+  monitor mode.
+</p>
+<p>
+This wireless chip behaves just like a phy chip
+  connected to ethernet controller.&nbsp;&nbsp; Thus, interrupts and
+  tx/rx hardware queues are shared among gigabit
+  ethernet and wireless and GuestOS can not handle any
+  raw 802.11 frames.&nbsp;&nbsp; As the wireless part has no
+  separate MAC address, the ethernet and wireless uses same MAC
+  address. &nbsp;&nbsp;
+Guest OS should insert VLAN tag to select destination 'phy',
+  i.e. ethernet or wireless for outgoing packets.&nbsp;&nbsp; For incoming
+  packets, the hypervisor and the hardware inserts dedicated VLAN tag
+  in received packets.
+</p>
+<p>
+Linux support for wireless is integrated into ethernet driver
+ 'ps3_gelic'.&nbsp;&nbsp; The control interface is designed to use
+ standard Linux's Wireless Extension.&nbsp;&nbsp; Thus standard
+ Linux wireless managing tools, wireless_tools, wpa_supplicant etc
+ should work on this driver.&nbsp;&nbsp; As PS3 Linux kernel runs in
+ 64bit mode, systemcalls from 32bit userland program is passed via
+ compatible layer of Linux kernel.&nbsp;&nbsp; Since there are some
+ issues for wireless extension in this compat layer, 32bit wireless
+ managing tools may not work well.
+</p>
+<p>
+PS3 low model has no wireless.
+</p>
+
+
+
+
+
+<h3>USB</h3>
+
+
+
+
+
+<p>The PS3 is equipped with industry standard USB EHCI host controllers
+
+and companion OHCI host controllers, and optionally an internal high speed USB
+
+hub. In this case, the USB ports on the front panel connect to the internal hub, and
+
+not to the USB host controllers directly.&nbsp;&nbsp;The host
+
+controllers are represented as devices on the hypervisor SB
+
+bus.&nbsp;&nbsp;The PS3 Linux support implements the minimal
+
+EHCI and OHCI driver 'bus glues' as needed by the standard Linux USB
+
+driver stack.</p><h3>Game PAD</h3>
+
+
+
+
+
+<p>PS3 game pad has both USB mode and Bluetooth
+
+mode.&nbsp;&nbsp;Enabling each mode depends on the timing of pressing
+
+PS button, which resides in the center of the pad.</p>
+
+
+
+
+
+<p>In USB mode, although it almost conforms to USB HID specification,
+
+it requires special USB request to enable sending HID data
+
+(reports).&nbsp;&nbsp; The generic USB HID driver is modified to
+
+support this.&nbsp;&nbsp;Because it is just HID device, information of
+
+the device is retrieved by standard HID device node, like
+
+/dev/input/js0, /dev/input/event0 and so on.&nbsp;&nbsp;Bluetooth mode
+
+is not supported by Linux.</p>
+
+
+
+
+
+<h3>Memory card reader/writer</h3>
+
+
+
+
+
+<p>Built-in memory card reader/writer supports Memory Stick,
+
+CompactFlash and SD.&nbsp;&nbsp;The controller is a high speed USB
+
+device and conforms to the USB Mass Storage
+
+specification.&nbsp;&nbsp;The
+
+generic USB Mass Storage driver of Linux can support this device
+
+without modification.&nbsp;&nbsp; The device is connected to a root
+
+port of the
+
+EHCI controller.&nbsp;&nbsp;Because each card slot behaves logical
+
+unit (LUN), the Linux driver can support all slots simultaneously.</p>
+
+
+
+
+
+<h3>Bluetooth</h3>
+
+
+
+
+
+<p>PS3 has built in USB Bluetooth host controller which conforms to
+
+Bluetooth host controller interface specification, so generic hci_usb
+
+Linux driver can handle the host controller.&nbsp;&nbsp;The controller
+
+is high speed USB device and connected to directly to an internal EHCI root
+
+port.</p>
+
+
+
+
+
+<p>Paring between Bluetooth device and host is maintained on a per OS
+
+basis.&nbsp;&nbsp;That is, Linux paring information&nbsp;does not
+
+propagate to the Game OS, and vice versa.</p>
+
+
+
+
+
+<h3>Real Time Clock</h3>
+
+
+
+
+
+<p>Similar to a PC, a built-in real time clock (RTC) keeps the wall
+
+clock time for the PS3. The RTC is backed up by a battery and
+
+so&nbsp;ticks&nbsp;even if external
+
+power is removed.&nbsp; The RTC value can be read by a hypervisor
+
+call, but it can not be written.&nbsp;&nbsp; The RTC value
+
+monotonically increases
+
+and never rolls back.</p>
+
+
+
+
+
+<p>The PS3 Linux platform support uses the standard RTC userland
+
+interface
+
+/dev/rtc, The standard hwclock command can be used to manage the RTC.
+
+Since the RTC is read only, the PS3 Linux platform support maintaines a
+
+value in system flash memory that represents the difference between the
+
+hardware RTC value and the Linux RTC value.</p>
+
+
+
+
+
+<h2>How to build PS3 Linux kernel</h2>
+
+
+
+
+
+<p>The Linux kernel can be compiled as follows:</p><p>Linux kernel 2.6.25.4
+
+</p>
+
+
+
+
+
+<ul><li>Extract the Linux Kernel source
+
+    <p style="line-height: 100%; font-family: monospace; margin-left: 40px;">
+
+$ tar jxf linux-2.6.25.4-YYYYMMDD.tar.bz2<br>
+
+$ cd linux-2.6.25.4-YYYYMMDD <br>
+
+$ make ps3_defconfig </p>
+
+  </li><li>You can change the kernel configuration by editing .config file</li><li> You can start compiling Linux kernel as follows.
+
+    <p style="line-height: 100%; font-family: monospace; margin-left: 40px;">
+
+$ make </p>
+
+This generates a kernel image file named vmlinux.
+
+  </li></ul>
+
+
+
+
+
+<h2>Delivered Linux Kernel and Mainlining Activities</h2>
+
+
+
+
+
+<p>Work is ongoing to improve Linux kernel support for the PS3 by
+
+dedicated staff.&nbsp;&nbsp;One goal is to make the mainline kernel have
+
+full support for PS3.
+</p>
+
+
+
+
+
+<p>Since the release of the linux-2.6.16 PS3 support to Linux
+
+distributors for use in PS3 release day distributions, there has been
+
+continuous work to cleanup the source code, with significant parts
+
+completely re-worked to properly interface with appropriate kernel
+
+infrastructures.&nbsp;&nbsp;Our Linux kernel development effort is shifting to
+
+device drivers and the perfomance monitor.
+</p>
+
+
+
+
+
+<p>Following the public release of the PS3 game console, Linux kernel
+
+maintenance for the PS3 will continue publicly.&nbsp;&nbsp;Source code
+
+is available for public download at <A HREF="http://www.kernel.org/pub/linux/kernel/people/geoff/cell/">www.kernel.org</A>.
+
+</p>
+
+
+
+
+
+<h2>Revision History</h2>
+
+<table style="width: 100%;" border="1" cellpadding="2" cellspacing="2">
+
+  <tbody>
+    <tr><td style="text-align: center;">1.7</td><td style="text-align: center;">May 27 2008</td><td>Update Linux kernel 2.6.25.4<br>DTC is no longer needed to build the kernel"</td></tr>
+    <tr><td style="text-align: center;">1.6</td><td style="text-align: center;">Feb 1 2008</td><td>Update Linux kernel 2.6.24<br>Update &nbsp;"Wireless Extension for GbE"</td></tr>
+    <tr><td style="text-align: center;">1.5</td><td style="text-align: center;">Oct 26 2007</td><td>Update Linux kernel 2.6.23</td></tr>
+    <tr><td style="text-align: center;">1.4</td><td style="text-align: center;">Aug 17 2007</td><td>Update Linux kernel 2.6.23-rc3</td></tr>
+    <tr><td style="text-align: center;">1.3</td><td style="text-align: center;">Apr 25 2007</td><td>Add &nbsp;"Wireless Extension for GbE"</td></tr>
+    <tr><td style="text-align: center;">1.1</td><td style="text-align: center;">Dec 8 2006</td><td>Added "Revision History" and "About This Document"</td></tr>
+    <tr><td style="text-align: center;">1.0</td><td style="text-align: center;">Nov 11 2006</td><td>Initial Revision</td></tr>
+  </tbody>
+
+</table>
+
+</body></html>

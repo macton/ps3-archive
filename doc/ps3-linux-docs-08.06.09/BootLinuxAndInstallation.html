@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja"><head>
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+  <title>Booting Linux and Installation</title><!-- $Id: BootLinuxAndInstallation.html,v 1.17 2008/05/28 14:59:54 geert Exp $ --></head>
+<body lang="en-US">
+
+<h1>Booting Linux and Installation</h1>
+
+<p style="margin-bottom: 0in; margin-left: 40px;">&copy; 2007 Sony Computer Entertainment Inc.<br>&copy; 2006,2007 Sony Corporation<br>
+</p>
+
+<p style="margin-bottom: 0in; margin-left: 40px;">Permission is
+granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 published by the Free Software Foundation; with no Invariant
+Sections, no Front-Cover Texts, and no Back-Cover Texts. A copy of the
+license is included in the section entitled "GNU Free Documentation
+License".</p>
+
+<p style="margin-bottom: 0in; margin-left: 40px;">DISCLAIMER</p>
+
+<p style="margin-bottom: 0in; margin-left: 40px;">THIS
+DOCUMENT IS
+PROVIDED "AS IS," AND COPYRIGHT HOLDERS MAKE NO
+REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED, INCLUDING, BUT NOT
+LIMITED TO, WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE, NON-INFRINGEMENT, OR TITLE; THAT THE CONTENTS OF THE
+DOCUMENT ARE SUITABLE FOR ANY PURPOSE; NOR THAT THE IMPLEMENTATION OF
+SUCH CONTENTS WILL NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS,
+TRADEMARKS OR OTHER RIGHTS.<br>
+
+COPYRIGHT HOLDERS
+WILL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL OR CONSEQUENTIAL
+DAMAGES ARISING OUT OF ANY USE OF THE DOCUMENT OR THE PERFORMANCE OR
+IMPLEMENTATION OF THE CONTENTS THEREOF.</p><p style="margin-bottom: 0in; margin-left: 40px;">TRADEMARK NOTICE</p><p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;"PLAYSTATION" and "PS3" are registered trademarks of Sony Computer
+Entertainment Inc. "Cell Broadband Engine" is a trademark of<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;Sony Computer Entertainment Inc. Linux&reg; is the registered
+trademark of Linus Torvalds in the U.S. and other countries.<br>&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;Other company, product and service names
+may be registered trademarks, trademarks or service marks of others.</p>
+
+
+
+<p>This document &nbsp;illustrates overview of &nbsp;PS3
+Linux boot process and how to install boot loader.</p>
+
+<h2>Create Linux Disk Partition</h2>
+
+<p class="western">First of all, user needs to initialize
+built-in
+HDD. With conventional PC this could be done as part of Linux
+installation, however with PS3, user need to decide what amount of
+HDD assign to Linux. Fig. 1 shows it&#8217;s concept.</p>
+
+<p style="text-align: center;" class="western"><img style="border: 0px solid ; width: 720px; height: 540px;" alt="Disk Partition" src="Figs/f1_06.png" name="&#402;O&#402;&#8240;&#402;t&#402;B&#402;b&#402;N&#402;X1"><br>
+
+Fig . 1 Disk Partitions</p>
+
+<h2>Install Boot Loader</h2>
+
+<p class="western">As conventional PC, we need to install
+a boot
+loader into PS3 to boot Linux. On the other hand, we need a special
+program to install a boot loader on special reserved area in PS3
+system flash rom. The installer is called as &#8220;OtherOS
+Installer&#8221;.</p>
+
+<p class="western">Due to requirements of boot loader on
+PS3, such as
+capability of using USB human interface devices,
+&#8220;kboot&#8217;
+has been utilized as a boot loader for Linux on PS3.</p>
+
+<p class="western">In other words, before staring Linux
+installation,
+you need to get customized &#8220;kboot&#8221; from Linux distributor,
+respectively. Then you install &#8220;kboot&#8221; to PS3. Please refer installation manual of Linux distribution, for
+details. </p>
+
+<p class="western">The customized
+&#8220;kboot&#8221; which you
+installed, may contain corresponding proper installation program for
+Linux distribution, you choose.</p>
+
+<p class="western">Fig&nbsp;2. shows overview of Kboot.</p>
+
+<p style="text-align: center;" class="western"><img style="border: 0px solid ; width: 720px; height: 540px;" alt="Boot Loader &amp; Installer" src="Figs/f1_07.png" name="&#402;O&#402;&#8240;&#402;t&#402;B&#402;b&#402;N&#402;X2"><br>
+
+Fig 2. Boot Loader</p>
+
+<p class="western"><br>
+
+</p>
+
+<p class="western">Please find out details of
+&#8220;OtherOS&#8221;
+Flash area in Fig&nbsp;3. And refer
+<a href="http://www.playstation.com/ps3-openplatform/">http://www.playstation.com/ps3-openplatform/
+</a>&nbsp;also, for up to
+date &nbsp;information.</p>
+
+<p style="text-align: center;" class="western"><img style="border: 0px solid ; width: 720px; height: 540px;" alt="Other OS Flash Area" src="Figs/f1_08.png" name="&#402;O&#402;&#8240;&#402;t&#402;B&#402;b&#402;N&#402;X3"><br>
+
+Fig. 3 Other OS Flash Area Details</p>
+
+<h2 class="western">Switch System to Boot</h2>
+
+<p class="western">Once you installed
+&#8220;kboot&#8221; into PS3.
+You can switch the environment to be booted with boot selection
+menu from GameOS. On the other hand, from Linux environment, you also
+can switch the environment, using "ps3-boot-game-os" command.</p>
+
+<p style="text-align: center;" class="western"><img style="border: 0px solid ; width: 720px; height: 540px;" alt="Change Default Boot System" src="Figs/f1_09.png" name="&#402;O&#402;&#8240;&#402;t&#402;B&#402;b&#402;N&#402;X4"><br>
+
+Fig. 4 Change Default Boot System</p>
+
+<p><span style="font-family: &quot;Century&quot;,serif;">Fig 5
+shows
+details of &nbsp;the algorithm decides which environment to boot.</span></p>
+
+<span style="font-family: &quot;Century&quot;,serif;"></span>
+<p style="text-align: center;" class="western"><img style="border: 0px solid ; width: 720px; height: 540px;" alt="Boot Flow Chart with Kboot" src="Figs/f1_10.png" name="&#402;O&#402;&#8240;&#402;t&#402;B&#402;b&#402;N&#402;X5"><br>
+
+Fig 5. Boot Flow Chart with Kboot</p>
+
+<h2>Revision History</h2>
+
+<table style="width: 100%;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr><td style="text-align: center;">1.4</td><td style="text-align: center;">Aug 17 2007</td><td>Update copyright</td></tr>
+    <tr><td style="text-align: center;">1.3</td><td style="text-align: center;">Apr 25 2007</td><td>Update copyright and figure</td></tr>
+    <tr><td style="text-align: center;">1.1</td><td style="text-align: center;">Dec 8 2006</td><td>Added "Revision History" and &nbsp;corrected typo</td></tr>
+    <tr><td style="text-align: center;">1.0</td><td style="text-align: center;">Nov 11 2006</td><td>Initial Revision</td></tr>
+  </tbody>
+</table>
+
+</body></html>

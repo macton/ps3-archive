@@ -1,0 +1,170 @@
+
+
+* Title
+  Specification of minimum boot loader configuration file 
+  for removable media
+
+* Version
+  - v0.1	2007-04-25	Hiroyuki Machida	
+	Initial Version
+
+  Please feel free to send your comments on the spec, 
+  to cbe-oss-dev@ozlabs.org.
+
+* Target of the specification
+
+  bootloader for Linux on PS3
+  bootable removable media for PS3 Linux
+
+* Background 
+
+  This document describes specification of minimum boot loader config 
+  file and it's behavior for PS3 Linux environment, so that system is
+  able to boot from removable media/devices.
+
+  This specification does NOT intend to define behavior and config file
+  format in internal HDD.  It's up to the boot loader's implementation.
+
+  On the other hand, boot configuration file on removable boot
+  media like Live CD can not be changed, once released.
+  So we need minimum specification of the boot loader, so that
+  any released removable boot media continue to be bootable.
+
+
+* Supported Removable Boot Media and Format
+
+  Boot loader must have capability to recognize DOS partition table
+  and able on usb storage, and to handle DOS partition format and
+  the first primary partition, at least.
+
+  Following file system must be supported to read the boot config file
+  (like /etc/kboot,conf) and to get kernel and initial ram disk image 
+  on removable media.  Write methods may not be supported.
+
+       ext2            on usb storage
+       FAT16/32        on usb storage
+       ISO9660         on optical media
+
+  Please note that those are not for rootfs of Linux, just for place 
+  of the boot config file, the target kernel and the target initial 
+  ram disk image.  Booted Kernel would support various fs types and 
+  extensions, including ISO 9660 rockridge extension.  Booting from UDF
+  media could be  supported using by ISO-UDF bridge.  Some boot loader 
+  may support other media and formats, but it's not expected to be common
+  across various boot loaders.
+
+
+* Expected Behavior on detecting Removable Boot Media 
+
+  1) When boot loader recognizes block device, it is expected to execute 
+  following procedure, to find removable boot media.
+
+  1-1. check if the device is a removable media.
+  1-2. check if format of the device meet one of following;
+    ext2 (on USB mass), FAT16/32 (on USB mass) or ISO9660 (on optical)
+  1-3. check if the device has more than one partitions, if no, try to
+    examine boot configuration file on the media.
+  1-4. Otherwise, it checks if the 1st primary partition is marked as
+    "active" or not.  In the case of "active', try to examine boot 
+    configuration file on the 1st primary partition.
+  1-5. try to mount the selected block device as "read only" and read 
+    the boot configuration file either /etc/kboot.conf or /etc/kboot.cnf
+    (on FAT, it would be /ETC/KBOOT.CNF). In case of both exist,
+    priority is up to boot loader implementation.
+
+  If boot loader successfully read the /etc/kboot.conf (or /etc/kboot.cnf),
+  it would load kernel and initial ram disk image, as specified at the
+  configuration file, then jump to entry address of the loaded kernel.
+
+
+  2) When boot loader find more than one bootable media, it's expected
+  to allow user to select and boot from removable boot media, with some 
+  how.  This doesn't mean enforce every system to boot from removable media,
+  prior to internal HDD. Such priority is up to it's implementation.
+
+*  Minimum Boot Loader Config File Format 
+
+  Bootloader needs to understand following minimum file format.
+
+	timeout=[num]
+	initrd=[path1]
+	root=[rootname]
+	default=[label]
+	[label]=[path2]  [kernel-params]
+
+	 - [num] is digit number greater than zero; which describes value of 
+	 boot selection time out. It's just used as hint. Boot loader may ignore
+	 this value.
+
+	 - [label] is a label for boot entry.
+
+	 - [path1] is a absolute path name of initrd; which boot loader
+	 would look. That means the pathname has to begin with "/".
+	 And it's the 1st "/" stands for root dir of the file system,
+	 not root fs specified [rootname], to be mounted with the target kernel. 
+	 That means, [path1] resides in same name space with the boot loader 
+	 configuration file.
+
+	 - [path2] is a absolute path name of the target kernel.  As same as 
+	 [path1], [path2] resides in same name space with the boot loader 
+	 configuration file.
+
+	 - [rootname] is a name of root file system, which  bootloader would
+	 pass to kernel. It can have 'UUID=' or 'LABEL=' format.
+
+	 - [kernel-params] is a set of kernel parameters; which bootloader 
+	would pass to kernel.
+
+
+  Boot loader may support other config file formats in addition to
+  the this /etc/kboot.conf (or /ETC/KBOOT.CNF).
+
+
+* Appendix
+
+* A.1: Use Case 1 - Live USB Stick
+  Descriptions
+	Linux environment (XFS) and a boot loader(FAT16) in 
+	one USB storage.
+
+	Part.	FS	Size	Flag	Label
+	1st 		FAT16	512MB	Active	(don't care)
+	2nd	EXT2	1G	-	(don't care)
+	3rd	SWAP	2GB	-	(don't care)
+	4th	XFS	4.5GB	-	MY_USB_MEM
+
+
+  Files
+	/PS3/otheros/otheros.bld	 
+				- Boot loader to be install to flash
+	/ETC/KBOOT.CNF		- Boot config file
+	/BOOT/VMLINUX.16	- Linux kernel 
+	/BOOT/INITRD.16		- initrd
+	/BOOT/CONFIG.216	- config of kernel
+	/BOOT/SYSMAP.216	- symbol info of kernel
+
+  /ETC/KBOOT.CNF
+	timeout=10
+	initrd=/BOOT/INITRD.16
+	default=linuxmobile
+	linuxmobile="/BOOT/VMLINUX.16   root=LABEL=MY_USB_MEM"
+
+
+* A.2: Use Case 2 - Live DVD
+  Descriptions
+	Linux environment and a boot loader in one Optical Disc
+
+	No partition table
+	The optical disc would be readable as "ISO9660".
+	In the case of UDF, UDF-ISO bridge would be used
+
+  Files
+	/PS3/otheros/otheros.bld    
+	                     -  Bootloader to be install to flash
+	/etc/kboot.conf      -  Boot config file
+	/isolinux/vmlinuz    -  Linux kernel
+	/isolinux/initrd.gz  -  initrd 
+
+---
+
+

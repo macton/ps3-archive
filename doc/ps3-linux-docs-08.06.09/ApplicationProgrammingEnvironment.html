@@ -1,0 +1,285 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja"><head> <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Application Programming Environment</title><!-- $Id: ApplicationProgrammingEnvironment.html,v 1.38 2008/05/28 14:59:54 geert Exp $ --></head>
+<body lang="en-US"><h1 style="margin-bottom: 0.2in;">Application
+Programming
+Environment</h1>
+<p style="margin-bottom: 0in; margin-left: 40px;">&copy; 2008 Sony Computer Entertainment Inc.<br>
+&copy; 2006,2007,2008 Sony Corporation<br>
+</p><p style="margin-bottom: 0in; margin-left: 40px;">Permission
+is
+granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 published by the Free Software Foundation; with no Invariant
+Sections, no Front-Cover Texts, and no Back-Cover Texts. A copy of the
+license is included in the section entitled "GNU Free Documentation
+License".</p>
+<p style="margin-bottom: 0in; margin-left: 40px;">DISCLAIMER</p>
+<p style="margin-bottom: 0in; margin-left: 40px;">THIS
+DOCUMENT IS
+PROVIDED "AS IS," AND COPYRIGHT HOLDERS MAKE NO REPRESENTATIONS OR
+WARRANTIES, EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO,
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE,
+NON-INFRINGEMENT, OR TITLE; THAT THE CONTENTS OF THE DOCUMENT ARE
+SUITABLE FOR ANY PURPOSE; NOR THAT THE IMPLEMENTATION OF SUCH CONTENTS
+WILL NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS, TRADEMARKS OR
+OTHER RIGHTS.<br>
+COPYRIGHT HOLDERS
+WILL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL OR CONSEQUENTIAL
+DAMAGES ARISING OUT OF ANY USE OF THE DOCUMENT OR THE PERFORMANCE OR
+IMPLEMENTATION OF THE CONTENTS THEREOF.<br></p><p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;TRADEMARK NOTICE</p><p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;"PLAYSTATION" and "PS3" are registered trademarks of Sony Computer
+Entertainment Inc. "Cell Broadband Engine" is a trademark of<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;Sony Computer Entertainment Inc. Linux&reg; is the registered
+trademark of Linus Torvalds in the U.S. and other countries.<br>&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;Other company, product and service names may be registered
+trademarks, trademarks or service marks of others.TRADEMARK NOTICE</p><p>This note explains how to setup programing environment,
+programing environment itself including SPE programming and
+PS3 platform specific programming.</p>
+
+<h2>PPE Programming Environment</h2>
+<p>The conventional development and runtime
+environment on Linux is used to develop and to run PPE
+programs. Readers of the document are supposed to have generic
+knowledge of application programming on such conventional Linux, and
+descriptions about details of application programming will not
+provided here. Please refer to manuals of the Linux distribution which
+you use, and/or published books, for details of application
+programming environment on Linux.</p>
+
+<h2>SPE Programming Environment Overview</h2>
+
+<p>Fig.1 shows overview of SPE runtime environment, including diagram consists of
+SPUFS from kernel, libspe and SPU newlib.</p>
+
+<p align="center">
+<img style="width: 720px; height: 540px;" alt="Structure of software components" src="Figs/f1_12.png"><br>
+Fig.1 Diagram of SPE runtime environment</p>
+
+<p>Linux kernel has equipped SPUFS for abstraction of SPEs, 
+and application programs can
+handle SPEs by using libspe, which utilize the SPUFS internally. For
+SPE side, GCC is available as compilers, and newlib is
+provided as a standard C library.</p>
+
+<ul>
+<li>Libspe
+<p>Libspe, the SPE management library, is needed to access SPEs by
+application programs on PS3 Linux. On PS3 Linux, libspe version 2
+(libspe2) is recommended as a standard library.
+Please refer to the manual &#8220;SPE Runtime Management Library Version 2.2&#8221;
+for details.</p></li>
+
+<li>SPU toolchain
+<p>At least, to generate SPE programs,
+SPE targeting toolchain packages, i.e. SPU binutils, SPU gcc and newlib, are needed.</p></li>
+</ul>
+
+<p>In addition to this minimum development environment,
+many useful libraries and tools are also available;
+e.g. SIMD math library, etc.</p>
+
+
+<h2>Setup PPE Programming Environment</h2>
+<p>PPE programs can be developed and run in the same way as
+conventional programs on Linux.
+In general, packages such as GCC, glibc and GDB, are
+used to develop PPE programs in C and/or C++. Please refer manuals
+of Linux distribution which you use, for detail.</p>
+
+<p>In addition to such conventional programming tools,
+some extensions and/or additional tools are also available.
+Please refer to 
+the <a href="http://www.bsc.es/projects/deepcomputing/linuxoncell/">&#8220;Linux on Cell&#8221;</a> page
+at <a href="http://www.bsc.es/">Barcelona Supercomputing Center (BSC) website</a>
+for details.</p>
+
+<h2>Setup SPE Programming Environment</h2>
+<p>To develop SPE programs, at least, the following packages are needed to be installed,
+in addition to the PPE programming environment.
+They are available as a part of Cell/B.E. SDK 3.0 at
+<a href="http://www.bsc.es/">Barcelona Supercomputing Center (BSC) website</a>
+(http://www.bsc.es/).
+To reach the pages related to Cell Linux, you would visit the page 
+<a href="http://www.bsc.es/projects/deepcomputing/linuxoncell/">"Linux on Cell"</a>,
+then go down to "Cell BE Components".</p>
+
+<ul>
+<li>Libspe
+<p>The SPE management library &#8220;libspe&#8221; version 2, aka libspe2,
+is needed to run SPE programs on PS3 Linux.</p>
+
+<p>
+</p><ul>
+<li><a href="http://www.bsc.es/projects/deepcomputing/linuxoncell/cellsimulator/sdk3.0/CellSDK-Open-Fedora/cbea/libspe2-2.2.0-91.ppc.rpm">
+libspe2-2.2.0-91.ppc.rpm</a></li> 
+<li><a href="http://www.bsc.es/projects/deepcomputing/linuxoncell/cellsimulator/sdk3.0/CellSDK-Open-Fedora/cbea/libspe2-2.2.0-91.ppc64.rpm">
+libspe2-2.2.0-91.ppc64.rpm</a></li> 
+<li><a href="http://www.bsc.es/projects/deepcomputing/linuxoncell/cellsimulator/sdk3.0/CellSDK-Open-Fedora/cbea/libspe2-devel-2.2.0-91.ppc.rpm">
+libspe2-devel-2.2.0-91.ppc.rpm</a></li> 
+<li><a href="http://www.bsc.es/projects/deepcomputing/linuxoncell/cellsimulator/sdk3.0/CellSDK-Open-Fedora/cbea/libspe2-devel-2.2.0-91.ppc64.rpm">
+libspe2-devel-2.2.0-91.ppc64.rpm</a></li>
+</ul>
+</li>
+<p></p>
+
+<li>SPU toolchain
+<p>At least, SPU compilers, binutils, C runtime library are needed 
+in order to generate SPE programs.</p>
+
+<p>
+</p><ul>
+<li><a href="http://www.bsc.es/projects/deepcomputing/linuxoncell/cellsimulator/sdk3.0/CellSDK-Open-Fedora/cbea/spu-binutils-2.17.50-33.ppc.rpm">
+spu-binutils-2.17.50-33.ppc.rpm</a></li>
+<li><a href="http://www.bsc.es/projects/deepcomputing/linuxoncell/cellsimulator/sdk3.0/CellSDK-Open-Fedora/cbea/spu-gcc-4.1.1-107.ppc.rpm">
+spu-gcc-4.1.1-107.ppc.rpm</a></li>
+<li><a href="http://www.bsc.es/projects/deepcomputing/linuxoncell/cellsimulator/sdk3.0/CellSDK-Open-Fedora/cbea/spu-gcc-c++-4.1.1-107.ppc.rpm">
+spu-gcc-c++-4.1.1-107.ppc.rpm</a></li> 
+<li><a href="http://www.bsc.es/projects/deepcomputing/linuxoncell/cellsimulator/sdk3.0/CellSDK-Open-Fedora/cbea/spu-newlib-1.15.0-82.ppc.rpm">
+spu-newlib-1.15.0-82.ppc.rpm</a></li>
+</ul>
+<p></p>
+
+<p>Other newer versions of SPU toolchain and SPE management library 
+may become available, and they are also expected to work well with PS3 Linux.</p>
+</li>
+</ul>
+
+<p>After installing Linux distribution, install the add-on
+packages above by executing the following command:</p>
+
+<pre>
+  # rpm -ivh *.rpm
+</pre>
+
+<h2>Performance Tool</h2>
+<h3>perfmon2</h3>
+Perfmon2&nbsp; is one of the performance tool .
+<br><br>Perfmon2
+uses the CPU's hardware performance counter to monitor the performance
+events. It is developed at <a href="http://perfmon2.sourceforge.net/">http://perfmon2.sourceforge.net/</a><br><br>Perfmon2 is composed of the kernel patch, libpfm and pfmon command.<br>&nbsp; <br>Note<br>&nbsp;&nbsp;&nbsp; This PS3 perfmon2 support is under developing, so several pfmon options are not tested enough.<br><br>How to use pfmon<br><br>&nbsp; &nbsp; Please see <a href="http://perfmon2.sourceforge.net/docs.html">"http://perfmon2.sourceforge.net/docs.html"</a>.<br><br>Limitations of pfmon on PS3<br>&nbsp; <br>&nbsp; - '--system-wide' option needs '--cpu-list=0'.<br><br>&nbsp; - We can't execute several pfmon commands simultaneously.<br><br>&nbsp; - The folloing features which are explained in the above pfmon document are not available on PS3.<br>&nbsp;&nbsp;&nbsp; "7 Monitoring multiple processes/threads"<br>&nbsp;&nbsp;&nbsp; "8 Triggering Monitoring at specific location"<br>&nbsp;&nbsp;&nbsp; "9 Dealing with symbols"<br>&nbsp;&nbsp;&nbsp; "10 Sampling with pfmon" 
+
+<h2>Platform Specific Programming</h2>
+
+<h3>Programming with Frame Buffer</h3>
+
+<p>The frame buffer on PS3 platform has been implemented as
+virtual frame buffer allocated on main memory. We&#8217;ll explain
+how it works and how user program could be control it, here.</p>
+
+<h4>Virtual Frame Buffer and VSYNC</h4>
+
+<p>Fig. 2 shows a whole picture of double buffering and
+VSYNC support with the frame buffer device.</p>
+<p align="center"><img style="border: 0px solid ; width: 720px; height: 540px;" alt="vfb-vsync" src="Figs/f1_02.png" name="Virtual frame buffer and VSYNC timing"><br>Fig.
+2 Virtual frame buffer and VSYNC timing</p>
+
+<p>Virtual frame buffer is allocated two sides,
+on main memory in Kernel space. User space application can use this
+frame buffer with mapping it to user space by mmap(). With mmap()
+against /dev/fb, User can map up to 2 buffers and choose two
+model. One is &#8220;single buffer&#8221;. With this model,
+user can map and draw to frame buffer just same as conventional frame
+buffer. The kernel daemon would take place flip hvc. The other is
+&#8220;double buffer&#8221; model, with it application need to
+take care to issue flip through ioctl by program itself, although it could
+achieve flicker-less drawing </p>
+
+<h4>Single Buffer Model</h4>
+
+<p>Fig.3 shows timing chart of hypervisor call, dma
+and irq with a single buffer scenario, inside Kernel. </p>
+
+<p align="center"><img style="border: 0px solid ; width: 720px; height: 540px;" alt="ps3fbd" src="Figs/f1_03.png" name="&#402;O&#402;&#8240;&#402;t&#402;B&#402;b&#402;N&#402;X2"><br>Fig.
+3 VFB behavior in the Linux kernel</p>
+
+<p>The kernel daemon &#8220;ps3fbd&#8221; implements single frame buffer model and
+controls its dma and flip using hvc.</p>
+
+<ol> <li>In the GPU side flip is done
+at vsync timing and after finishing it, the interrupt is issued to
+the kernel. Handling the interrupt, the kernel daemon requests dma
+via hyper visor and the data in the frame buffer on main memory is
+transferred to the GPU. This hvc is blocking call.</li>
+<li>The daemon calls non-blocking FLIP request via hyper
+visor. At the next vsync timing, flip will be done in the GPU side. </li>
+<li>Return to 1.</li>
+</ol>
+
+<h4>Double Buffer Model</h4>
+<p>Fig.4 shows timing of IOCTL, hypervisor call, dma and
+irq with double buffer scenario.</p>
+
+<p align="center"><img style="border: 0px solid ; width: 720px; height: 540px;" alt="double-buffer" src="Figs/f1_04.png" name="&#402;O&#402;&#8240;&#402;t&#402;B&#402;b&#402;N&#402;X3"><br>Fig. 4 IOCTL usage from the
+user Application</p>
+
+<p>From the user applications, the frame buffer can be used
+with double buffering as following.</p>
+
+<ol>
+<li>Get a screen size and number of frame buffers by
+ioctl PS3FB_IOCTL_SCREENINFO.</li>
+<li>Stop the &#8220;ps3fbd&#8221; which performs flip in
+the kernel by ioctl PS3FB_IOCTL_ON. Then flip will be controllable
+from the user space.</li>
+<li>Wait the next vsync by blocking ioctl FBIO_WAITFORVSYNC.</li>
+<li>After the vsync, call blocking ioctl PS3FB_IOCTL_FSEL
+with frame buffer number in user space. This number indicates which
+frame buffer will be used at the next flip. After calling the ioctl,
+the data in the frame buffer is transferred with dma and flip request
+is issued in the kernel.</li>
+<li>Return to 3.</li>
+<li>Call the ioctl PS3FB_IOCTL_OFF at the end of the
+applications.</li>
+</ol>
+
+<h4>Sample Code</h4>
+<p>You can find&nbsp; the sample code as "vsync-sample" package.</p>
+
+<p>This sample code is a simple drawing program with frame
+buffer using double buffering.</p>
+
+<dl>
+<dt>How to compile</dt>
+<dd>To build binaries, simple use make as follows.<span style="font-family: monospace;"></span></dd>
+<dd><span style="font-family: monospace;">% make
+clean; make</span></dd>
+<dt>How to run</dt> <dd>Before&nbsp;running the sample code, &nbsp;get root
+privilege which /dev/fb0 operations require.<br>
+Sample 1 - &nbsp;shows "moving line" with double buffering.</dd>
+<dd><span style="font-family: monospace;">#
+&nbsp;vsync 1</span></dd> <dd>Sample 2 -
+&nbsp;shows "moving line" with single
+buffering.</dd> <dd><span style="font-family: monospace;">#
+&nbsp;vsync 2</span></dd> <dd>Sample 3 -
+&nbsp; red and blue screen by turns with
+double buffering</dd> <dd><span style="font-family: monospace;">#
+&nbsp;vsync 3</span></dd> <dt><span style="font-family: monospace;"></span>What
+it shows</dt>
+<dd>The code shows how to use ioctl for frame buffer with
+double buffering. Brief description is as follows. Please check the
+source code "vsync.c" for more details.<br> <br>
+After opening /dev/fb0 and get file descriptor, you can use ioctl
+for frame buffer in the kernel via /dev/fb0. Check the size of the
+frame buffer by ioctl and map it to the user space. After writing
+data to the buffer in the user space, issue ioctl PS3FB_IOCTL_FSEL
+and then the data will be displayed at the next vsync timing. You can
+get this timing by blocking ioctl FBIO_WAITFORVSYNC, after returning
+the ioctl you can reuse the buffer. Fig. 4 shows ioctl and flip
+timing, please see it for more details. Don't forget to call
+PS3FB_IOCTL_OFF at the end of your application, or frame buffer in
+the kernel remains blank.</dd> <dt>Note</dt> <dd>You
+can also use console ioctl to switch text/graphics
+mode. Please check man pages for console_ioctl.</dd>
+</dl>
+
+<p> Fig.5 shows frame buffer size and offset in user space.</p>
+<p align="center"><img style="border: 0px solid ; width: 720px; height: 540px;" alt="size dnd offset" src="Figs/f1_16.png" name="&#402;O&#402;&#8240;&#402;t&#402;B&#402;b&#402;N&#402;X3"><br>Fig. 5 frame buffer size and offset in user space<br> 
+
+</p><h2>Revision History</h2>
+<table border="1" cellpadding="2" cellspacing="2" width="100%">
+  <tbody>
+    <tr><td style="text-align: center;">1.6</td><td style="text-align: center;">Jan 28 2008</td><td><ul><li>Updated perfmon2 HTML link</li></ul></td></tr>
+    <tr><td style="text-align: center;">1.5</td><td style="text-align: center;">Oct 26 2007</td><td><ul><li>Moved to Cell/B.E. SDK 3.0.</li><li>Added description about the perfmon2.</li></ul></td></tr>
+    <tr><td style="text-align: center;">1.4</td><td style="text-align: center;">Aug 17 2007</td><td><ul><li>Update copyright.</li><li>Added description about the SIMD math library.</li></ul></td></tr>
+    <tr><td style="text-align: center;">1.3</td><td style="text-align: center;">Apr 25 2007</td><td><ul><li>Added Fig.5 in Programming with Frame Buffer.</li><li>Moved to Cell/B.E. SDK 2.1.</li><li>Updated package versions.</li></ul></td></tr>
+    <tr><td style="text-align: center;">1.1</td><td style="text-align: center;">Dec 8 2006</td><td><ul><li>Added "Revision History" and corrected typo</li><li>Updated package versions.</li></ul></td></tr>
+    <tr><td style="text-align: center;">1.0</td><td style="text-align: center;">Nov 11 2006</td><td><ul><li>Initial Revision</li></ul></td></tr>
+  </tbody>
+</table><br></body></html>

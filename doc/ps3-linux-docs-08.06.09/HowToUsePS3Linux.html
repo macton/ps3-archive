@@ -1,0 +1,427 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html lang="ja"><head> <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"><title>Use Linux on a PS3</title><!-- $Id: HowToUsePS3Linux.html,v 1.12 2008/05/28 14:59:54 geert Exp $ --></head>
+<body lang="en-US"><h1 class="western">How to
+Use&nbsp;Linux on a PS3</h1>
+<p style="margin-bottom: 0in; margin-left: 40px;">&copy 2008 Sony Computer Entertainment Inc.<br>
+&copy; 2006,2007,2008 Sony Corporation<br>
+</p><p style="margin-bottom: 0in; margin-left: 40px;">Permission
+is
+granted to copy, distribute and/or modify this document under the
+terms of the GNU Free Documentation License, Version 1.2 published by
+the Free Software Foundation; with no Invariant
+Sections, no Front-Cover Texts, and no Back-Cover Texts. A copy of the
+license is included in the section entitled "GNU Free Documentation
+License".</p>
+<p style="margin-bottom: 0in; margin-left: 40px;">DISCLAIMER</p>
+<p style="margin-bottom: 0in; margin-left: 40px;">THIS
+DOCUMENT IS
+PROVIDED "AS IS," AND COPYRIGHT HOLDERS MAKE NO
+REPRESENTATIONS OR WARRANTIES, EXPRESS OR IMPLIED, INCLUDING, BUT NOT
+LIMITED TO, WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE, NON-INFRINGEMENT, OR TITLE; THAT THE CONTENTS OF THE
+DOCUMENT ARE SUITABLE FOR ANY PURPOSE; NOR THAT THE IMPLEMENTATION OF
+SUCH CONTENTS WILL NOT INFRINGE ANY THIRD PARTY PATENTS, COPYRIGHTS,
+TRADEMARKS OR OTHER RIGHTS. COPYRIGHT HOLDERS
+WILL NOT BE LIABLE FOR ANY DIRECT, INDIRECT, SPECIAL OR CONSEQUENTIAL
+DAMAGES ARISING OUT OF ANY USE OF THE DOCUMENT OR THE PERFORMANCE OR
+IMPLEMENTATION OF THE CONTENTS THEREOF.</p><p style="margin-bottom: 0in; margin-left: 40px;">TRADEMARK NOTICE</p><p>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;"PLAYSTATION" and "PS3" are registered trademarks of Sony Computer
+Entertainment Inc. "Cell Broadband Engine" is a trademark of<br>&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;Sony Computer Entertainment Inc. Linux&reg; is the registered
+trademark of Linus Torvalds in the U.S. and other countries.<br>&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;Other company, product and service names
+may be registered trademarks, trademarks or service marks of others.</p>
+<h2 class="western">How to use Linux on a PS3</h2><h3 class="western">1. Abstract</h3><p>To install
+Linux on a PS3, you have to
+execute following
+steps.
+</p><ul><li>Create a Linux partition on the HDD. </li><li>Install
+boot loader. </li><li>Set boot flag to
+'Other OS'.</li></ul><h3 class="western">2.
+Requirements</h3>
+<h4>Hardware</h4>
+<ul><li>PS3 which System Software version 2.10 or later
+is installed <ul><li> Controller</li><li>USB
+keyboard</li><li> Monitor<br>
+The following will be used for output from a PS3. <ul><li>HDTV
+monitor(supporting 480p, 1080i, 720p or 1080p)</li><li>Connected
+with the HDMI connector or the AV
+MULTIOUT connector</li></ul> </li></ul> </li></ul><h3 class="western">3. Setup procedure.</h3>
+<h4>3.1 Setup your PS3.</h4>
+<h5>1) Connecting power cables.</h5>
+<h5>2) Connecting monitor</h5>
+<ul><li>Connected with the HDMI connector or the AV
+MULTIOUT
+connector.</li></ul><h5>3) Making other interface
+connections.</h5>
+<ul><li>Connect the USB cable of the Controller to the
+USB
+connector.</li><li>Connect the USB cable of the USB
+keyboard to the USB
+connector.</li></ul><h4>3.2 How to create a Linux
+partition.</h4>
+<h5> 1) Turn on the PS3. After initializing, you can
+see GameOS menu.&nbsp; You select "Settings -&gt; System
+Settings".</h5>
+<h5>2) After selecting "Format Utility" from sub menu, following
+messages are displayed.</h5>
+<p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 40px; font-family: monospace;">Format
+Memory Stick<br>
+Format SD Memory Card<br>
+Format CompactFlash<br>
+Format Hard Disk
+</p><p style="line-height: 100%; widows: 0; orphans: 0;">To
+allocate a Linux partition on the Hard Disk, select "Format Hard
+Disk".</p>
+<h5> 3) After following message is displayed. you select 'Yes'.</h5>
+<p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 40px; font-family: monospace;">Do
+you want to format the hard disk?</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 180px; font-family: monospace;">Yes
+No</p><h5> 4) You can see following message.</h5>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">Select
+a partition setting for the hard disk.</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 100px; font-family: monospace;">Use
+All for the PS3 System<br>
+Custom</p>
+<p style="line-height: 100%; widows: 0; orphans: 0;"> To
+allocate a Linux partition on the Hard Disk, select "Custom".<br>
+After selecting "Custom", following messages are displayed.</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">Select
+a partition setting for the hard disk.</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 100px; font-family: monospace;">Use
+All for the PS3 System<br>
+Allot 10GB to the Other OS<br>
+Allot 10GB to the PS3 System</p>
+<p style="line-height: 100%; widows: 0; orphans: 0;"> To
+allocate a Linux partition on the Hard Disk, select one of following
+items.</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">Allot
+10GB to the Other OS<br>
+Allot 10GB to the PS3 System</p>
+<p style="line-height: 100%; widows: 0; orphans: 0;"> If
+your hard disk size is 20GB, you have to select 'Allot 10GB to the
+Other OS'.</p><h5> 5)&nbsp;After selecting the item,
+following messages are displayed.</h5><p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">Select
+the hard disk format method.</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 100px; font-family: monospace;">Quick
+Format<br>Full Format</p>You can select either&nbsp;
+'Full Format' or
+'Quick Format'.<br><h5>6)
+After following message is displayed. you select 'Yes'.</h5>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">If
+you format, all data will be deleted.<br>
+This data cannot be restored.<br>
+Are you sure you want to continue?</p><p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 150px; font-family: monospace;">Yes
+No</p><h5> 7)&nbsp;After selecting 'Yes', format
+process
+is started.</h5>
+<h5> 8) After creating a Linux partition, following messages are
+displayed.</h5>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">Format
+Complete.<br>
+Press the X button to restart the system.</p>
+<p style="line-height: 100%; widows: 0; orphans: 0;">After
+pressing the X button, restart the system software and you can
+see GameOS menu.</p>
+<h4>3.3 How to install kboot.</h4>Please refer the
+installation documents in your distribution<span style="font-weight: bold;"></span><h4>3.4 Change
+the default system to boot</h4>
+<p style="line-height: 100%; widows: 0; orphans: 0;"> To
+start kboot, you have to change the default system to boot.</p>
+<h5> 1) Turn on the PS3. After initializing, you
+select "Settings -&gt; System Settings" by using GameOS menu.</h5>
+<h5> 2) After selecting "Default System" from sub menu, following
+messages are displayed.</h5>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">PS3<br>
+Other OS
+</p><h5> 3) After selecting "Other OS"&nbsp;, following
+messages are displayed.</h5><p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">Do
+you want to quit the PS3 system and start the other system<br>now?<br>&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; Yes&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; No<br></p><p style="line-height: 100%; widows: 0; orphans: 0;">After
+selecting 'Yes', &nbsp;kboot is automatically started.</p><p style="line-height: 100%; widows: 0; orphans: 0;"></p><h3 class="western">4. How to install Linux on a PS3.</h3><p class="western">Some Linux distributions start supporting
+PS3 already. Please download your favorite distribution as follows.
+</p><dl><dt>Fedora 9</dt><dd><a href="http://fedoraproject.org/">http://fedoraproject.org/</a></dd>
+<dt>Gentoo LiveCD(Beta)</dt>
+<dd><a href="http://www.gentoo.org/proj/en/base/ppc64/ps3/">http://www.gentoo.org/proj/en/base/ppc64/ps3/</a>
+</dd><dt>Ubuntu 7.10</dt>
+<dd><a href="https://help.ubuntu.com/community/PlayStation_3">https://help.ubuntu.com/community/PlayStation_3</a></dd>
+</dl>Please refer the installation documents in the distribution.
+<h2 class="western">How to use Kboot</h2>
+<p style="line-height: 100%; widows: 0; orphans: 0;">This
+section describes the usage of kboot.</p>
+<h3 class="western">1. Abstract</h3>
+<p style="line-height: 100%; widows: 0; orphans: 0;">Kboot
+is a Linux boot loader based on kexec. You can load and exec
+another
+Linux kernel on the Linux kernel.</p>
+<h3 class="western">2. Function</h3>
+<p style="line-height: 100%; widows: 0; orphans: 0;">Kboot
+supports the following functions:</p>
+<ul> <li> Boot-up by loading Linux kernel and initrd from
+the
+built-in HDD, &nbsp;built-in
+BD drive, and/or USB storage device (e.g. HDD, CD-ROM, memory card)</li>
+<li> File systems supported include: &nbsp;ext2,
+ext3, FAT,&nbsp;iso9660<br>
+Another file system may be additionally supported by adding it to
+config of
+the kernel. </li> <li> If the file system support disk
+label, you can use
+'LABEL=' in fstab file.</li> <li> Boot-up by loading a
+Linux kernel and initrd from NFS
+servers.</li> <li> Boot-up by loading a Linux kernel and
+initrd from HTTP,
+FTP, and TFTP servers. </li> <li> Defining multiple
+labels in the kboot.conf file to select
+one to be booted from kboot.</li>
+</ul><h3 class="western">3. Executing Linux by kboot</h3>
+<p style="line-height: 100%; widows: 0; orphans: 0;">You
+can boot Linux by kboot, which does the following:</p>
+<h4> (1)
+Hardware initialization</h4>
+<p style="line-height: 100%; widows: 0; orphans: 0;">Reads
+in some device driver modules and performs initialization. During
+the
+initialization process it waits for a response from each device for 15
+seconds. A device that does not respond within this period is
+ignored.</p>
+<h4> (2) Device file creation with udev</h4><p style="line-height: 100%; widows: 0; orphans: 0;"> The
+udev mechanism creates device files.</p>
+<h4> (3) Network initialization
+</h4><p style="line-height: 100%; widows: 0; orphans: 0;">First,
+kboot sends DHCP request to the network. If a DHCP timeout
+occurs, network
+is set as follows:</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">ipv4_addr="192.168.0.10"<br>
+ipv4_netmask="255.255.255.0"<br>
+ipv4_default=""<br>
+ipv4_nameserver=""<br>
+dns_domain=""</p>
+<p style="line-height: 100%; widows: 0; orphans: 0;"> If
+the filename parameter is specified from the DHCP server, kboot
+initializes NFS boot as follows:</p>
+<ul> <li> Linux kernel file <ul> <li>The
+next-server statement is used to specify the host
+address of the TFTP server from which the Linux kernel file(specified
+in the filename statement) is to be loaded. If no next-server parameter
+applies, the DHCP server IP address is used. TFTP default root path is
+/tftpboot. </li> </ul> </li> <li> NFS root
+path <ul> <li>NFS root path is set by adding option
+root-path line in
+the dhcpd.conf. The NFS server IP address may be added by separating it
+with a colon (:).</li> </ul> </li>
+</ul><p style="line-height: 100%; widows: 0; orphans: 0;">E.g.
+dhcpd.conf </p>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">host
+ps3-1 {</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 80px;">hardware
+ethernet 00:13:A9:XX:YY:ZZ;<br>
+fixed-address 192.168.0.20;<br>
+option root-path "192.168.0.30:/tftpboot/linux";<br>
+next-server 192.168.0.30;<br>
+filename "/linux/boot/vmlinux-nfs";</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">}</p>
+<p style="line-height: 100%; widows: 0; orphans: 0;"> NFS
+boot configuration is written in /etc/kboot.conf.</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">default=nfsboot<br>
+timeout=10<br>
+root=/dev/nfs<br>
+<br>nfsboot='tftp://$next-server$filename ip=on
+nfsroot=$nfshost:$path
+root=/dev/nfs '</p>
+<h4> (4) Mounting File system</h4>
+<p style="line-height: 100%; widows: 0; orphans: 0;"> The
+kboot boot loader searches for file systems to be mounted on '/'
+&nbsp;by using&nbsp;following algorithm.<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+- device search priority&nbsp;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; built-in BD drive, USB mass storage, built-in HDD</p><p style="line-height: 100%; widows: 0; orphans: 0;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+- check if the media has more than one partitions, if no, try to
+examine boot configuration file on the media.<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+- Otherwise, it checks if the partition is marked as
+"active"&nbsp; or not in ascending order. In the case of "active',
+try to examine boot
+configuration file on the&nbsp;partition.<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+- check if format of the media(or partition) meet one of following;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp; ext2, ext3, FAT16/32 or ISO9660</p><p style="line-height: 100%; widows: 0; orphans: 0;">&nbsp;&nbsp;&nbsp;
+&nbsp; &nbsp; &nbsp;(Caution) kboot mount ext3 file system
+by using "-t ext2" option<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+- try to mount the selected media(or partition) on '/' and check a boot
+configuration file name&nbsp;either
+/etc/kboot.conf or /ETC/KBOOT.CNF &nbsp;or
+&nbsp;/etc/yaboot.conf. If
+the boot configuration file exists, &nbsp;kboot &nbsp;finish
+searching.
+If the boot configuration file does not exist, kboot umount the
+selected media(or partition) and check the nextt media(or partition).<br></p>
+<p style="line-height: 100%; widows: 0; orphans: 0;">After
+mounting the file system, etc/kboot.conf(or /ETC/KBOOT.CNF), etc/fstab,
+etc/hosts on
+the
+mounted file systems are copied to the /etc/kboot.conf, /etc/fstab, and
+/etc/hosts on the kboot RAM disk.</p>
+<h4> (5) Initialization of /etc/kboot.conf on the kboot RAM disk
+for new boot
+setting</h4>
+<h4> (6) Initialization of keymap</h4>
+<h4> (7) kboot prompt is displayed. After timeout, the default
+command is
+executed.</h4>
+<p>See
+the next section, "How to Use kboot", for details.<span style="font-family: monospace;"></span></p>
+<p style="margin-left: 40px;"><span style="font-family: monospace;">kboot:</span></p>
+<h3 class="western">4. How to use kboot</h3>
+<p style="line-height: 100%; widows: 0; orphans: 0;">After
+starting, kboot displays its prompt on the system console.
+If a timeout is set, a key producing input (e.g., [Space], a
+letter, [Del], etc., but not [Shift], [Alt], and such) must be
+pressed in time to keep kboot from automatically proceeding with
+the default.<br>
+<br>A kernel is booted by specifying its name, followed by any
+arguments that should be passed on the boot command line.<br>
+<br>The kernel name can have the following forms:
+</p><dl style="margin-left: 40px;"> <dt> label</dt>
+<dd>A
+pre-defined expansion, see above. Label names are case-sensitive.<br>
+Example: b26161 root=/dev/ps3da3</dd>
+</dl><dl style="margin-left: 40px;"> <dt>/path/to/kernel</dt>
+<dd>An
+absolute path to the kernel, stored in the booted system.<br>
+kboot
+automatically mounts the file systems needed to access the
+kernel image, according to the fstab file provided when building
+the initramfs.<br>
+Example: /home/k/linux-2.6.16.1/arch/i386/boot/bzImage</dd>
+</dl><dl style="margin-left: 40px;"> <dt>//path/to/kernel</dt>
+<dd>An
+absolute path to a kernel stored on kboot's temporary file system.
+If this path leads out to the booted file system, the usual
+automatic mounting is done.<br>
+Example: <dl> <dd>cd //tmp<br>
+wget http://some.host.net/vmlinux.gz<br>
+gzip -d vmlinux.gz<br>
+//tmp/vmlinux</dd> </dl> </dd>
+</dl><dl style="margin-left: 40px;"> <dt>relative/path/to/kernel</dt>
+<dd>As
+above, but the path is relative to the current directory, which
+can be on the booted file system, or on kboot's temporary
+file system.<br>
+Example: <dl> <dd>cd /home/k/linux-2.6.16<br>
+vmlinux root=/dev/ps3da1</dd> </dl> </dd>
+</dl><dl style="margin-left: 40px;"> <dt>device:/path/on/device</dt>
+<dt>device:path/on/device</dt> <dd>A
+file on an explicitly named device. The device can be specified
+with the path to a device file, or simply with the name
+of the file in /dev.<br>
+Example: sda6:kernels/vmlinux</dd>
+</dl><dl style="margin-left: 40px;"> <dt>host:/path</dt>
+<dd>A
+file on an NFS server. The address can be specified in the numeric
+format, or as a name.<br>
+Example: server.my.org:/kernels/vmlinux</dd>
+</dl><dl style="margin-left: 40px;"><dt>http://host/path/to/file</dt>
+<dt>http://host:port/path/to/file</dt> <dd> A
+file on an HTTP server.<br>
+Example: cat http://www.kernel.org/kdist/finger_banner</dd> <dt></dt>
+<dt>ftp://host/path/to/file</dt> <dt>ftp://host:port/path/to/file</dt>
+<dd> A
+file on an FTP server.<br>
+Example: ftp://server.my.org/pub/linux/kernel/v2.6/vmlinux-2.6.16</dd>
+<dt></dt> <dt>tftp://host/path/to/file</dt> <dt>tftp://host:port/path/to/file</dt>
+<dd> A
+file on a TFTP server.<br>
+Example: tftp://bootserver.my.net/kernel-0a000001</dd>
+</dl><p style="line-height: 100%; widows: 0; orphans: 0;">kboot
+recognizes the following "internal" commands:</p>
+<dl style="margin-left: 40px;"> <dt>cd
+directory</dt> <dd> Change to the specified directory.
+Automatic mounting and
+the distinction of / and // are applied like for kernel images. Also
+the device:... and host:... forms can be used with "cd". </dd> <dt>pwd</dt>
+<dd>Print the current directory.</dd>
+</dl><dl style="margin-left: 40px;"><dt>game(or ps3-boot-game-os)</dt><dd>This command switches boot
+flag in &#8220;other-os flash area&#8221; to boot game os, and
+reboot
+onto game os.</dd></dl><p style="line-height: 100%; widows: 0; orphans: 0;">Any
+other command is handed to the shell for execution. In
+particular, a shell with command-line editing and file name
+completion can be be obtained by simply typing "sh".</p>
+<h3 class="western">5. kboot.conf</h3>
+<p style="line-height: 100%; widows: 0; orphans: 0;"> When
+the kboot starts, it looks for a file kboot.conf, which
+contains variable assignments. The syntax is the same as in shell
+scripts. (In fact, kboot.conf is a shell script.) The following
+variables have a special meaning:</p>
+<dl style="margin-left: 40px;"> <dt>default=&lt;command&gt;</dt>
+<dd> Command
+to execute on timeout or if the user enters an empty line.</dd>
+</dl><dl style="margin-left: 40px;"> <dt>initrd=&lt;path_to_file&gt;</dt>
+<dd>Initial
+RAM disk that is loaded by default. This can also be set per
+kernel by passing the initrd=&lt;path_to_file&gt; boot
+parameter.</dd>
+</dl><dl style="margin-left: 40px;"> <dt>root=&lt;device&gt;</dt>
+<dd>Root
+device the kernel selects by default. This can also be set per
+kernel by passing the root=&lt;device&gt; boot parameter. If
+using the
+form /dev/&lt;name&gt;, this variable can also serve as a fall
+back if
+/etc/fstab does not contain a valid entry for the root file system.</dd>
+</dl><dl style="margin-left: 40px;"><dt>timeout=&lt;seconds&gt;</dt>
+<dd>Time
+out after that many seconds without user input. Also editing
+the command line (without pressing [Enter]) counts as
+input. "timeout"
+does not work (and yields a warning) if "default" is not
+also set.</dd>
+</dl><dl style="margin-left: 40px;"><dt>set -x</dt><dd>Turn
+on kboot debug mode. &nbsp;You can see kboot trace messages.</dd></dl><p style="line-height: 100%; widows: 0; orphans: 0;">
+Any
+other variables define a command line, which is expanded when
+the variable name (which we then call a "label") is entered as a
+command at the kboot prompt.</p>
+<p style="line-height: 100%; widows: 0; orphans: 0;">Example:</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">b26131="/boot/vmlinux
+root=/dev/ps3da7"</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; margin-left: 40px;">With
+this defined, "b26131 init=/bin/sh" will be expanded as follows:</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">/boot/vmlinux
+root=/dev/sda7 init=/bin/sh</p>
+<p style="line-height: 100%; widows: 0; orphans: 0;">You
+can specify a following special boot parameter on the
+PS3.
+</p><dl style="margin-left: 40px;"> <dt>video=ps3fb:mode:&lt;video
+mode ID&gt;</dt> <dd>Drawing
+resolution can be set explicitly, if needed. If
+there is no video syntax, auto mode is used. </dd>
+</dl><p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 80px;">&lt;video
+mode ID&gt;<br>
+0: auto mode , default value<br>
+YUV 60Hz 1:480i 2:480p 3:720p 4:1080i 5:1080p<br>
+YUV 50Hz 6:576i 7:576p 8:720p 9:1080i 10:1080p<br>
+RGB 60Hz 33:480i 34:480p 35:720p 36:1080i 37:1080p<br>
+RGB 50Hz 38:576i 39:576p 40:720p 41:1080i 42:1080p<br>
+VESA 11:WXGA 12:SXGA 13:WUXGA<br>
+<br>full screen mode: &lt;video mode ID&gt; + 128<br>
+dither ON mode : &lt;video mode ID&gt; + 2048</p>
+<p style="line-height: 100%; widows: 0; orphans: 0;">kboot.conf
+sample is as follows.</p>
+<p style="line-height: 100%; widows: 0; orphans: 0; font-family: monospace; margin-left: 40px;">default=linux<br>
+timeout=10<br>
+root="LABEL=/"<br>
+<br>linux="/boot/vmlinux-2.6.23
+initrd=/boot/initrd.img-2.6.23 video=ps3fb:mode:3"</p>Please refer to
+the "<a href="./mini-boot-conf.txt"><span style="text-decoration: underline;">Specification of minimum
+boot loader configuration file&nbsp; for removable media</span></a>"
+document.<br><h2>Revision History</h2>
+<table style="width: 100%;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr><td style="text-align: center;">1.7</td><td style="text-align: center;">May 28 2008</td><td>Update to Fedora 9</td></tr>
+    <tr><td style="text-align: center;">1.6</td><td style="text-align: center;">Feb 1 2008</td><td>Update PS3 System software version for PS3 Linux</td></tr>
+    <tr><td style="text-align: center;">1.5</td><td style="text-align: center;">Oct 26 2007</td><td>Update PS3 System software version for PS3 Linux</td></tr>
+    <tr><td style="text-align: center;">1.4</td><td style="text-align: center;">Aug 17 2007</td><td>Change built-in HDD device name. Update kboot kernel version</td></tr>
+    <tr><td style="text-align: center;">1.3</td><td style="text-align: center;">Apr 25 2007</td><td>Support PS3 System Software 1.60. Update to Fedora Core 6</td></tr>
+    <tr><td style="text-align: center;">1.1</td><td style="text-align: center;">Dec 8 2006</td><td>Added "Revision History" and &nbsp;"About This Document"</td> </tr>
+    <tr><td style="text-align: center;">1.0</td><td style="text-align: center;">Nov 11 2006</td><td>Initial Revision</td></tr>
+  </tbody>
+</table><p class="western"></p></body></html>
